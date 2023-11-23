@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
-import { UseSelector, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setNickname, setImg, setUid } from '../redux/modules/userInfo';
+import { getDoc, doc, Firestore } from 'firebase/firestore/lite'
 
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const activeNickname = useSelector((state) => state.userInfo);
-  const activeImg = useSelector((state) => state.userInfo);
-  const activeUid = useSelector((state) => state.userInfo);
-  const dispatch = useDispatch();
+  const [nickname, setNickname] = useState('');
+  const [profileImg, setProfileImg] = useState('');
+  // const activeNickname = useSelector((state) => state.userInfo);
+  // const activeImg = useSelector((state) => state.userInfo);
+  // const activeUid = useSelector((state) => state.userInfo);
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,10 +34,12 @@ function SignUp() {
       setPassword(value);
     }
     if (name === 'nickname') {
-      dispatch(activeNickname(value));
+      // dispatch(setNickname(value));
+      setNickname(value);
     }
     if (name === 'profileImg') {
-      dispatch(activeImg(event.target.files[0]));
+      // dispatch(setImg(event.target.files[0]));
+      setProfileImg(value);
     }
   };
 
@@ -72,14 +78,19 @@ function SignUp() {
             type="text"
             name="nickname"
             onChange={onChange}
-            value={activeNickname} // 추가
+            value={nickname} // 추가
             required
           ></input>
         </div>
         <div>
           <label>프로필 이미지</label>
           <br />
-          <input type="file" name="profileImg" onChange={onChange}></input>
+          <input 
+            type="file" 
+            accept="image/*"
+            name="profileImg" 
+            onChange={onChange}
+            ></input>
         </div>
         <button onClick={signUp}>회원가입</button>
       </form>
