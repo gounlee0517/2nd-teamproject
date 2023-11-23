@@ -1,36 +1,56 @@
 import React from 'react';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useRef } from 'react';
 
-import { deleteThanks } from '../redux/modules/thanks';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
-function ThanksBox({ thank }) {
-  const dispatch = useDispatch();
+function ThanksBox({ thanks, rnd, setRnd }) {
+  const navigate = useNavigate();
+  const { id, thank, like, userID, createdAt } = thanks;
 
   //수정버튼 눌렀는지 확인
   const [isEditing, setIsEditing] = useState(false);
-  //수정한 내용
-  const [editingText, setEditingText] = useState('');
+
+  const thanks1 = useRef(null);
+  const thanks2 = useRef(null);
+  const thanks3 = useRef(null);
+  const thanks4 = useRef(null);
+  const thanks5 = useRef(null);
+
+  const [tnk1, setTnk1] = useState(thank[0]);
+  const [tnk2, setTnk2] = useState(thank[1]);
+  const [tnk3, setTnk3] = useState(thank[2]);
+  const [tnk4, setTnk4] = useState(thank[3]);
+  const [tnk5, setTnk5] = useState(thank[4]);
+  // console.log(tnk1);
 
   //삭제버튼 핸들러
-  const onDeleteBtn = () => {
-    const answer = window.confirm('정말로 삭제하시겠습니까?');
-    if (!answer) return;
-
-    dispatch(deleteThanks(thank.postID));
+  const deleteThanks = async (event) => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      const thanksRef = doc(db, 'diarys', id);
+      await deleteDoc(thanksRef);
+      // window.location.reload();
+      rnd ? setRnd(false) : setRnd(true);
+    }
   };
 
   //수정완료 핸들러
-  const onEditDone = () => {
-    if (!editingText) return alert('수정사항이 없습니다.');
-
-    // dispatch(editLetter({ id, editingText }));
-    setIsEditing(false);
-    setEditingText('');
+  const updateThanks = async (event) => {
+    const thanksRef = doc(db, 'diarys', id);
+    await updateDoc(thanksRef, {
+      ...thanks,
+      thank: [
+        thanks1.current.value,
+        thanks2.current.value,
+        thanks3.current.value,
+        thanks4.current.value,
+        thanks5.current.value
+      ]
+    });
   };
 
-  //   console.log('ThanksBox: ', thank.postID);
-  let date = new Date(thank.createdAt).toLocaleDateString('ko', {
+  let date = new Date(createdAt).toLocaleDateString('ko', {
     year: '2-digit',
     month: '2-digit',
     day: '2-digit',
@@ -38,28 +58,83 @@ function ThanksBox({ thank }) {
     minute: '2-digit',
     second: '2-digit'
   });
+
   return (
     <>
       <div>
         <p>{date}</p>
 
         {isEditing ? (
-          <></>
+          <>
+            <div>
+              <input
+                defaultValue={thank[0]}
+                type="text"
+                ref={thanks1}
+                onChange={(event) => {
+                  setTnk1(event.target.value);
+                }}
+              />
+              <input
+                defaultValue={thank[1]}
+                type="text"
+                ref={thanks2}
+                onChange={(event) => {
+                  setTnk2(event.target.value);
+                }}
+              />
+              <input
+                defaultValue={thank[2]}
+                type="text"
+                ref={thanks3}
+                onChange={(event) => {
+                  setTnk3(event.target.value);
+                }}
+              />
+              <input
+                defaultValue={thank[3]}
+                type="text"
+                ref={thanks4}
+                onChange={(event) => {
+                  setTnk4(event.target.value);
+                }}
+              />
+              <input
+                defaultValue={thank[4]}
+                type="text"
+                ref={thanks5}
+                onChange={(event) => {
+                  setTnk5(event.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <button onClick={() => setIsEditing(false)}>취소</button>
+              <button
+                onClick={() => {
+                  updateThanks();
+                  setIsEditing(false);
+                }}
+              >
+                수정완료
+              </button>
+            </div>
+          </>
         ) : (
           <>
             <div>
-              <p>감사 1: {thank.thank[0]}</p>
-              <p>감사 2: {thank.thank[1]}</p>
-              <p>감사 3: {thank.thank[2]}</p>
-              <p>감사 4: {thank.thank[3]}</p>
-              <p>감사 5: {thank.thank[4]}</p>
+              <p>감사 2: {tnk1}</p>
+              <p>감사 2: {tnk2}</p>
+              <p>감사 3: {tnk3}</p>
+              <p>감사 4: {tnk4}</p>
+              <p>감사 5: {tnk5}</p>
             </div>
 
-            <p>{thank.like} likes</p>
+            <p>{like} likes</p>
 
             <div>
-              <button>수정</button>
-              <button onClick={onDeleteBtn}>삭제</button>
+              <button onClick={() => setIsEditing(true)}>수정</button>
+              <button onClick={deleteThanks}>삭제</button>
             </div>
           </>
         )}
