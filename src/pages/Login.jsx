@@ -10,6 +10,7 @@ import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
 import styled from 'styled-components';
 import GoogleLogin from '../components/Login/GoogleLogin';
+import GithubLogin from '../components/Login/GithubLogin';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const Login = () => {
           <button onClick={signIn}>로그인</button>
 
           <div>
-            <button>깃허브 로그인</button>
+            <GithubLogin />
             <GoogleLogin />
           </div>
         </STinputbox>
