@@ -1,26 +1,35 @@
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged, signInWithEmailAndPassword, GoogoleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../firebase';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
 import styled from 'styled-components';
+import GoogleLogin from '../components/Login/GoogleLogin';
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+
+  provider.setCustomParameters({
+    prompt: 'select_account'
+  });
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
     });
-  }, []);
+  }, [auth]);
 
   const onChange = (event) => {
-    const {
-      target: { name, value }
-    } = event;
+    const { name, value } = event.target;
     if (name === 'email') {
       setEmail(value);
     }
@@ -41,17 +50,6 @@ const Login = () => {
       alert('로그인에 실패하셨습니다');
     }
   };
-  // function signInGoogle() {
-  //   const provider = new GoogoleAuthProvider()
-  //   signInWithPopup(auth, provider)
-  //     .then((data) => {
-  //       setUserData(data.user);
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
 
   return (
     <>
@@ -83,12 +81,11 @@ const Login = () => {
           <button onClick={signIn}>로그인</button>
 
           <div>
-            <button>페이스북 로그인</button>
-            <button>구글 로그인</button>
+            <button>깃허브 로그인</button>
+            <GoogleLogin />
           </div>
         </STinputbox>
       </div>
-
       <Footer />
     </>
   );
@@ -97,7 +94,7 @@ const Login = () => {
 const STloginTxt = styled.h2`
   margin: 10vh auto 0 auto;
   font-size: 30px;
-`
+`;
 const STinputbox = styled.div`
   background-color: pink;
   width: 600px;
