@@ -16,10 +16,6 @@ import { getAuth } from 'firebase/auth';
 
 // Main 컴포넌트를 정의합니다.
 const Main = () => {
-  //로그인 유저 정보 가져오기
-  const auth = getAuth();
-  const user = auth.currentUser;
-
   // 기분을 저장하는 state를 추가합니다.
   const [mood, setMood] = useState('');
   const [selectedMood, setSelectedMood] = useState(null);
@@ -48,19 +44,7 @@ const Main = () => {
     fourThank: '',
     fiveThank: ''
   });
-  // 새 게시글 객체에 mood 필드를 추가합니다.
-  const newPost = {
-    userId: 'user.uid',
-    nickname: 'user.displayName',
-    createdAt: new Date().toLocaleString(),
-    content: input,
-    mood: mood,
-    views: 0,
-    likes: 0,
-    comments: []
-  };
-  const [searchName, setSearchName] = useState('');
-  const [searchNickname, setSearchNickname] = useState('');
+
   const [filter, setFilter] = useState('latest');
 
   // 페이지 이동을 위한 hook을 초기화합니다.
@@ -78,12 +62,6 @@ const Main = () => {
       }
 
       let postQuery = query(collection(db, 'posts'), orderBy(orderByField, orderDirection));
-      if (searchName) {
-        postQuery = query(postQuery, where('userId', '==', searchName));
-      }
-      if (searchNickname) {
-        postQuery = query(postQuery, where('nickname', '==', searchNickname));
-      }
 
       const postSnapshot = await getDocs(postQuery);
       const postList = postSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -92,7 +70,7 @@ const Main = () => {
     };
 
     fetchPosts();
-  }, [filter, searchName, searchNickname]);
+  }, []);
 
   // input의 변경 사항을 처리하는 함수입니다.
   const handleInput = (event) => {
@@ -118,9 +96,12 @@ const Main = () => {
     }
 
     // 새 게시글 객체를 만듭니다.
+
+    const auth = getAuth().currentUser;
+
     const newPost = {
-      userId: 'user123',
-      nickname: 'nickname123',
+      userId: auth.uid,
+      nickname: auth.displayName || '닉네임을 변경하세요',
       createdAt: new Date().toLocaleString(),
       content: input,
       mood: mood, // 이 부분이 추가된 것입니다.
@@ -180,7 +161,7 @@ const Main = () => {
     <>
       <Header />
       <main>
-        <div>5감사사 설명</div>
+        <div>5감사 설명</div>
         <div>
           <input
             type="text"
@@ -250,7 +231,7 @@ const Main = () => {
           {posts.map((post, index) => (
             <div key={index} style={{ border: '1px solid black', padding: '10px' }}>
               <div onClick={() => handleView(post.id)}>
-                작성자: {post.userId} / 닉네임: {post.nickname}
+                닉네임: {post.nickname}
                 작성 시간: {post.createdAt}
                 기분: {post.mood}
                 {post.content &&

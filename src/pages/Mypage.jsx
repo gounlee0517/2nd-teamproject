@@ -1,7 +1,7 @@
 //마이데이터 부분: 프로필 이미지와 이름 파이어베이스 연결 필요
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import usersData from '../usersData.json';
 import ThanksBox from '../components/Mypage/ThanksBox';
 
 function Mypage() {
+  const { id } = useParams(); // path parameter 가져오기 : userId
   const [thankList, setThanks] = useState([]); //firebase에서 읽어온 정보 state
   const [rnd, setRnd] = useState('true'); //화면 랜더링 state
 
@@ -17,8 +18,8 @@ function Mypage() {
   useEffect(() => {
     const initialState = [];
     const fetchData = async () => {
-      //collection 이름이 diarys인 모든 document 가져오기
-      const q = query(collection(db, 'diarys'));
+      //collection 이름이 posts인 모든 document 가져오기
+      const q = query(collection(db, 'posts'), where('userId', '==', id), orderBy('createdAt'));
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
@@ -29,9 +30,9 @@ function Mypage() {
     };
     fetchData();
   }, [rnd]);
+  console.log(thankList);
 
-  const { id } = useParams(); // path parameter 가져오기
-  const myThanks = thankList.filter((thanks) => thanks.userID === id); //id에 해당하는 감사일기
+  // const myThanks = thankList.filter((thanks) => thanks.userID === id); //id에 해당하는 감사일기
   //merge 시 auto api 으로 수정
   const myData = usersData.filter((user) => user.userID === id)[0];
 
@@ -43,11 +44,11 @@ function Mypage() {
       </Header>
       <ThanksDiary>
         <ProfileBox>
-          <ProfileImg src={myData.profileImg} alt="profile" />
-          <ProfileName>{myData.name}</ProfileName>
+          {/* <ProfileImg src={myData.profileImg} alt="profile" />
+          <ProfileName>{myData.name}</ProfileName> */}
         </ProfileBox>
-        {myThanks.map((thank) => (
-          <ThanksBox key={thank.postID} thanks={thank} rnd={rnd} setRnd={setRnd} />
+        {thankList.map((thank) => (
+          <ThanksBox key={thank.id} thanks={thank} rnd={rnd} setRnd={setRnd} />
         ))}
       </ThanksDiary>
     </>

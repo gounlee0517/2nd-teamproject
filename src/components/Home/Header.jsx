@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getAuth, setPersistence } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, setPersistence } from 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
 
@@ -11,6 +11,11 @@ function Header() {
     const auth = getAuth();
     auth.signOut();
     navigate('/');
+  };
+
+  const myPageClick = () => {
+    const auth = getAuth();
+    navigate('/mypage/' + auth.currentUser.uid);
   };
 
   const dispatch = useDispatch();
@@ -39,7 +44,13 @@ function Header() {
                 logout
               </STli>
 
-              <STli>my page</STli>
+              <STli
+                onClick={() => {
+                  myPageClick();
+                }}
+              >
+                my page
+              </STli>
             </>
           ) : (
             <>

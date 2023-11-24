@@ -2,11 +2,12 @@ import React from 'react';
 import { useState, useRef } from 'react';
 
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import styled from 'styled-components';
 
 function ThanksBox({ thanks, rnd, setRnd }) {
-  const { id, thank, like, userID, createdAt } = thanks;
+  const { id, content, comments, createdAt, likes, mood, nickname, userId, views } = thanks;
+  console.log(thanks);
 
   //수정버튼 눌렀는지 확인
   const [isEditing, setIsEditing] = useState(false);
@@ -17,17 +18,17 @@ function ThanksBox({ thanks, rnd, setRnd }) {
   const thanks4 = useRef(null);
   const thanks5 = useRef(null);
 
-  const [tnk1, setTnk1] = useState(thank[0]);
-  const [tnk2, setTnk2] = useState(thank[1]);
-  const [tnk3, setTnk3] = useState(thank[2]);
-  const [tnk4, setTnk4] = useState(thank[3]);
-  const [tnk5, setTnk5] = useState(thank[4]);
+  const [tnk1, setTnk1] = useState(content.oneThank);
+  const [tnk2, setTnk2] = useState(content.twoThank);
+  const [tnk3, setTnk3] = useState(content.threeThank);
+  const [tnk4, setTnk4] = useState(content.fourThank);
+  const [tnk5, setTnk5] = useState(content.fiveThank);
   // console.log(tnk1);
 
   //삭제버튼 핸들러
   const deleteThanks = async (event) => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      const thanksRef = doc(db, 'diarys', id);
+      const thanksRef = doc(db, 'posts', id);
       await deleteDoc(thanksRef);
       // window.location.reload();
       rnd ? setRnd(false) : setRnd(true);
@@ -36,10 +37,10 @@ function ThanksBox({ thanks, rnd, setRnd }) {
 
   //수정완료 핸들러
   const updateThanks = async (event) => {
-    const thanksRef = doc(db, 'diarys', id);
+    const thanksRef = doc(db, 'posts', id);
     await updateDoc(thanksRef, {
       ...thanks,
-      thank: [
+      content: [
         thanks1.current.value,
         thanks2.current.value,
         thanks3.current.value,
@@ -49,19 +50,19 @@ function ThanksBox({ thanks, rnd, setRnd }) {
     });
   };
 
-  let date = new Date(createdAt).toLocaleDateString('ko').split('.');
+  let date = createdAt.split('.');
   return (
     <>
       {isEditing ? (
         <Container>
           <CreatedDate>
-            {date[0]}년{date[1]}월{date[1]}일의 감사일기
+            {date[0]}년{date[1]}월{date[2]}일의 감사일기
           </CreatedDate>
           <div>
             <EditThanks>
               <p>감사 1</p>
               <Input
-                defaultValue={thank[0]}
+                defaultValue={tnk1}
                 type="text"
                 ref={thanks1}
                 onChange={(event) => {
@@ -72,7 +73,7 @@ function ThanksBox({ thanks, rnd, setRnd }) {
             <EditThanks>
               <p>감사 2</p>
               <Input
-                defaultValue={thank[1]}
+                defaultValue={tnk2}
                 type="text"
                 ref={thanks2}
                 onChange={(event) => {
@@ -83,7 +84,7 @@ function ThanksBox({ thanks, rnd, setRnd }) {
             <EditThanks>
               <p>감사 3</p>
               <Input
-                defaultValue={thank[2]}
+                defaultValue={tnk3}
                 type="text"
                 ref={thanks3}
                 onChange={(event) => {
@@ -94,7 +95,7 @@ function ThanksBox({ thanks, rnd, setRnd }) {
             <EditThanks>
               <p>감사 4</p>
               <Input
-                defaultValue={thank[3]}
+                defaultValue={tnk4}
                 type="text"
                 ref={thanks4}
                 onChange={(event) => {
@@ -105,7 +106,7 @@ function ThanksBox({ thanks, rnd, setRnd }) {
             <EditThanks>
               <p>감사 5</p>
               <Input
-                defaultValue={thank[4]}
+                defaultValue={tnk5}
                 type="text"
                 ref={thanks5}
                 onChange={(event) => {
@@ -129,7 +130,7 @@ function ThanksBox({ thanks, rnd, setRnd }) {
       ) : (
         <Container>
           <CreatedDate>
-            {date[0]}년{date[1]}월{date[1]}일의 감사일기
+            {date[0]}년{date[1]}월{date[2]}일의 감사일기
           </CreatedDate>
           <ThanksList>
             <Thank>
@@ -155,8 +156,8 @@ function ThanksBox({ thanks, rnd, setRnd }) {
           </ThanksList>
 
           <Div>
-            <Like>{like} likes</Like>
-
+            <Like>{views} views</Like>
+            <Like>{likes} likes</Like>
             <Button onClick={() => setIsEditing(true)}>수정</Button>
             <Button onClick={deleteThanks}>삭제</Button>
           </Div>
@@ -266,4 +267,5 @@ const Div = styled.div`
 const Like = styled.p`
   margin-top: 7px;
   margin-right: 5px;
+  margin-left: 10px;
 `;
