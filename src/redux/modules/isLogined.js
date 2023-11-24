@@ -11,7 +11,7 @@ export const setIslogined = (payload) => {
 };
 
 //초기상태값
-const initialState = false;
+const initialState = sessionStorage.length === 0 ? false : true;
 
 //리듀서
 const isLogined = (state = initialState, action) => {

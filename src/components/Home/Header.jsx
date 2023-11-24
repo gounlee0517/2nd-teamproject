@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getAuth } from 'firebase/auth';
+import { getAuth, setPersistence } from 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
 
@@ -16,6 +16,7 @@ function Header() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state);
   console.log('header: ', isLogin.isLogined);
+  console.log(sessionStorage.length);
   return (
     <>
       <STheader>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GithubAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { GithubAuthProvider, browserSessionPersistence, getAuth, setPersistence, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
@@ -11,6 +11,7 @@ function GithubLogin() {
   const dispatch = useDispatch();
 
   const signInWithGithub = () => {
+    setPersistence(auth, browserSessionPersistence);
     signInWithPopup(auth, provider)
       .then((result) => {
         dispatch(setIslogined(true));

@@ -12,9 +12,14 @@ import { getDocs, deleteDoc } from 'firebase/firestore';
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
 import { useSelector } from 'react-redux';
+import { getAuth } from 'firebase/auth';
 
 // Main 컴포넌트를 정의합니다.
 const Main = () => {
+  //로그인 유저 정보 가져오기
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   // 기분을 저장하는 state를 추가합니다.
   const [mood, setMood] = useState('');
   const [selectedMood, setSelectedMood] = useState(null);
@@ -45,8 +50,8 @@ const Main = () => {
   });
   // 새 게시글 객체에 mood 필드를 추가합니다.
   const newPost = {
-    userId: 'user123',
-    nickname: 'nickname123',
+    userId: 'user.uid',
+    nickname: 'user.displayName',
     createdAt: new Date().toLocaleString(),
     content: input,
     mood: mood,
@@ -168,17 +173,6 @@ const Main = () => {
     const newPosts = [...posts];
     newPosts[index].likes += 1;
     setPosts(newPosts);
-  };
-  // 수정 버튼을 눌렀을 때 상세 페이지로 이동하는 함수입니다.
-  const handleEdit = (id) => {
-    navigate(`/detail/${id}`);
-  };
-
-  // 삭제 버튼을 눌렀을 때 해당 게시글을 삭제하는 함수입니다.
-  const handleDelete = async (id) => {
-    const docRef = doc(db, 'posts', id);
-    await deleteDoc(docRef);
-    setPosts(posts.filter((post) => post.id !== id));
   };
 
   // 렌더링합니다. 여기서는 감사 내용 입력란, 게시글 검색 및 필터링, 게시글 목록을 표시합니다.

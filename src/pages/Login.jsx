@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  setPersistence,
+  browserSessionPersistence
+} from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
@@ -40,6 +47,7 @@ const Login = () => {
 
   const signIn = async (event) => {
     event.preventDefault();
+    setPersistence(auth, browserSessionPersistence);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
