@@ -113,7 +113,9 @@ const Main = () => {
   };
   // 좋아요 버튼을 눌렀을 때 좋아요 수를 증가시키는 함수입니다.
   const handleLike = async (event, postId, index) => {
-    event.stopPropagation();
+    if (event.currentTarget !== event.target) {
+      return;
+    }
     const docRef = doc(db, 'posts', postId);
     await updateDoc(docRef, {
       likes: increment(1)
