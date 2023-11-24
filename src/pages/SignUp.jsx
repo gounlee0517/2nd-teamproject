@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -6,10 +6,12 @@ import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const navigate = useNavigate();
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -27,6 +29,9 @@ function SignUp() {
     if (name === 'password') {
       setPassword(value);
     }
+    if (name === 'passwordConfirm') {
+      setPasswordConfirm(value);
+    }
   };
 
   const signUp = (event) => {
@@ -43,7 +48,18 @@ function SignUp() {
       });
   };
 
-  //uid, 닉네임, 프로필 이미지 => 전역 상태로 관리
+  const onChangePasswordConfirm = (e) => {
+    const passwordConfirmCurrent = e.target.value;
+    setPasswordConfirm(passwordConfirmCurrent);
+
+    if (password === passwordConfirmCurrent) {
+      setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 :)');
+      setIsPasswordConfirm(true);
+    } else {
+      setPasswordConfirmMessage('비밀번호가 달라요. 다시 입력해주세요 !');
+      setIsPasswordConfirm(false);
+    }
+  }
   return (
     <>
     <Header />
@@ -62,7 +78,8 @@ function SignUp() {
         <div>
           <label>비밀번호 확인</label>
           <br />
-          <input type="password" value={password} name="password" onChange={onChange} required></input>
+          <input type="password" value={passwordConfirm} name="passwordConfirm" onChange={onChange} required></input>
+          <label onChange={onChangePasswordConfirm}></label>
         </div>
 
         <button onClick={signUp}>회원가입</button>

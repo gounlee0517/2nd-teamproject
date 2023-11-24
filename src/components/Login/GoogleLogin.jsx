@@ -1,8 +1,6 @@
 import React from 'react';
 import {
   getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup
 } from 'firebase/auth';
@@ -17,16 +15,12 @@ function GoogleLogin() {
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // const user = result.user;
         navigate('/')
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
-        // const credential = GoogleAuthProvider.credentialFromError(error);
       });
   };
 

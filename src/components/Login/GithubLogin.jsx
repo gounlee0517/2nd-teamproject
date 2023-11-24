@@ -10,16 +10,12 @@ function GithubLogin() {
   const signInWithGithub = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // const credential = GithubAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // const user = result.user;
         navigate('/')
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         const email = error.customData.email;
-        // const credential = GithubAuthProvider.credentialFromError(error);
       });
   };
 
