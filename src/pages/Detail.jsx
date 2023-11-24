@@ -1,4 +1,3 @@
-// Detail.jsx
 // React와 필요한 hook들을 불러옵니다.
 import React, { useState, useEffect } from 'react';
 // react-router-dom에서 페이지 이동 및 파라미터를 가져오는 hook을 불러옵니다.
@@ -91,6 +90,7 @@ const Detail = () => {
           <p>{post.content.fiveThank}</p>
         </div>
       )}
+      <p>기분: {post.mood}</p>
       <p>조회수: {post.views}</p>
       <p>좋아요 수: {post.likes}</p>
       <h3>댓글</h3>

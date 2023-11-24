@@ -12,6 +12,29 @@ import { getDocs, deleteDoc } from 'firebase/firestore';
 
 // Main 컴포넌트를 정의합니다.
 const Main = () => {
+  // 기분을 저장하는 state를 추가합니다.
+  const [mood, setMood] = useState('');
+  const [selectedMood, setSelectedMood] = useState(null);
+  const moodEmojis = {
+    '기분 좋음': '(❁´◡`❁)',
+    '우울하거나 슬픔': '(T_T)',
+    '그냥 쏘쏘': '(⊙_⊙;)',
+    '최고의 하루를 보냈어': '(☞ﾟヮﾟ)☞╰(*°▽°*)╯☜(ﾟヮﾟ☜)'
+  };
+
+  // const handleMood = (event) => {
+  //   setSelectedMood(event.target.value);
+  //   setMood(moodEmojis[event.target.value]);
+  // };
+  const handleMood = (value) => {
+    if (selectedMood === value) {
+      setSelectedMood(null);
+    } else {
+      setSelectedMood(value);
+      setMood(moodEmojis[value]);
+    }
+  };
+
   // state를 정의합니다. posts는 게시글을 저장하고, input은 감사 내용을 저장합니다.
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState({
@@ -21,6 +44,17 @@ const Main = () => {
     fourThank: '',
     fiveThank: ''
   });
+  // 새 게시글 객체에 mood 필드를 추가합니다.
+  const newPost = {
+    userId: 'user123',
+    nickname: 'nickname123',
+    createdAt: new Date().toLocaleString(),
+    content: input,
+    mood: mood,
+    views: 0,
+    likes: 0,
+    comments: []
+  };
   const [searchName, setSearchName] = useState('');
   const [searchNickname, setSearchNickname] = useState('');
   const [filter, setFilter] = useState('latest');
@@ -77,11 +111,11 @@ const Main = () => {
       nickname: 'nickname123',
       createdAt: new Date().toLocaleString(),
       content: input,
+      mood: mood, // 이 부분이 추가된 것입니다.
       views: 0,
       likes: 0,
       comments: []
     };
-
     // Firestore에 새 문서를 추가합니다.
     addDoc(collection(db, 'posts'), newPost)
       .then((docRef) => {
@@ -101,6 +135,9 @@ const Main = () => {
       fourThank: '',
       fiveThank: ''
     });
+    // mood 상태도 초기화합니다.
+    setMood('');
+    setSelectedMood(null);
   };
 
   // 게시글을 클릭했을 때 조회수를 증가시키고 상세 페이지로 이동하는 함수입니다.
@@ -177,6 +214,33 @@ const Main = () => {
           onChange={handleInput}
           placeholder="다섯 번째 감사한 사항을 입력하세요."
         />
+      </div>
+      <div>오늘의 기분</div>
+      <div>
+        {/* <input type="radio" id="happy" name="mood" value="기분 좋음" onChange={handleMood} />
+        <label htmlFor="happy">{selectedMood === '기분 좋음' ? moodEmojis['기분 좋음'] : '기분 좋음'}</label>
+        <input type="radio" id="sad" name="mood" value="우울하거나 슬픔" onChange={handleMood} />
+        <label htmlFor="sad">
+          {selectedMood === '우울하거나 슬픔' ? moodEmojis['우울하거나 슬픔'] : '우울하거나 슬픔'}
+        </label>
+        <input type="radio" id="so-so" name="mood" value="그냥 쏘쏘" onChange={handleMood} />
+        <label htmlFor="so-so">{selectedMood === '그냥 쏘쏘' ? moodEmojis['그냥 쏘쏘'] : '그냥 쏘쏘'}</label>
+        <input type="radio" id="best" name="mood" value="최고의 하루를 보냈어" onChange={handleMood} />
+        <label htmlFor="best">
+          {selectedMood === '최고의 하루를 보냈어' ? moodEmojis['최고의 하루를 보냈어'] : '최고의 하루를 보냈어'}
+        </label> */}
+        <p onClick={() => handleMood('기분 좋음')}>
+          {selectedMood === '기분 좋음' ? moodEmojis['기분 좋음'] : '기분 좋음'}
+        </p>
+        <p onClick={() => handleMood('우울하거나 슬픔')}>
+          {selectedMood === '우울하거나 슬픔' ? moodEmojis['우울하거나 슬픔'] : '우울하거나 슬픔'}
+        </p>
+        <p onClick={() => handleMood('그냥 쏘쏘')}>
+          {selectedMood === '그냥 쏘쏘' ? moodEmojis['그냥 쏘쏘'] : '그냥 쏘쏘'}
+        </p>
+        <p onClick={() => handleMood('최고의 하루를 보냈어')}>
+          {selectedMood === '최고의 하루를 보냈어' ? moodEmojis['최고의 하루를 보냈어'] : '최고의 하루를 보냈어'}
+        </p>
         <button onClick={handleSubmit}>게시</button>
       </div>
 
@@ -196,6 +260,7 @@ const Main = () => {
           <div key={index} onClick={() => handleView(post.id)} style={{ border: '1px solid black', padding: '10px' }}>
             작성자: {post.userId} / 닉네임: {post.nickname}
             작성 시간: {post.createdAt}
+            기분: {post.mood}
             {post.content &&
               ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
                 <div key={i}>{post.content[key]}</div>
