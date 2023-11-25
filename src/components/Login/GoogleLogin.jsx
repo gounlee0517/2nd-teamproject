@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { browserSessionPersistence, getAuth, GoogleAuthProvider, setPersistence, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
@@ -12,6 +12,7 @@ function GoogleLogin() {
   const dispatch = useDispatch();
 
   const signInWithGoogle = () => {
+    setPersistence(auth, browserSessionPersistence);
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);

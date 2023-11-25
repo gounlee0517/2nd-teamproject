@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
 import { useSelector } from 'react-redux';
+import { getAuth } from 'firebase/auth';
 
 const Main = () => {
   // 기분을 저장하는 state를 추가합니다.
@@ -39,19 +40,7 @@ const Main = () => {
     fourThank: '',
     fiveThank: ''
   });
-  // 새 게시글 객체에 mood 필드를 추가합니다.
-  const newPost = {
-    userId: 'user123',
-    nickname: 'nickname123',
-    createdAt: new Date().toLocaleString(),
-    content: input,
-    mood: mood,
-    views: 0,
-    likes: 0,
-    comments: []
-  };
-  const [searchName, setSearchName] = useState('');
-  const [searchNickname, setSearchNickname] = useState('');
+
   const [filter, setFilter] = useState('latest');
 
   // 페이지 이동을 위한 hook을 초기화합니다.
@@ -69,12 +58,6 @@ const Main = () => {
       }
 
       let postQuery = query(collection(db, 'posts'), orderBy(orderByField, orderDirection));
-      if (searchName) {
-        postQuery = query(postQuery, where('userId', '==', searchName));
-      }
-      if (searchNickname) {
-        postQuery = query(postQuery, where('nickname', '==', searchNickname));
-      }
 
       const postSnapshot = await getDocs(postQuery);
       const postList = postSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -83,7 +66,7 @@ const Main = () => {
     };
 
     fetchPosts();
-  }, [filter, searchName, searchNickname]);
+  }, []);
 
   // input의 변경 사항을 처리하는 함수입니다.
   const handleInput = (event) => {
@@ -109,9 +92,12 @@ const Main = () => {
     }
 
     // 새 게시글 객체를 만듭니다.
+
+    const auth = getAuth().currentUser;
+
     const newPost = {
-      userId: 'user123',
-      nickname: 'nickname123',
+      userId: auth.uid,
+      nickname: auth.displayName || '닉네임을 변경하세요',
       createdAt: new Date().toLocaleString(),
       content: input,
       mood: mood, // 이 부분이 추가된 것입니다.
@@ -164,17 +150,6 @@ const Main = () => {
     const newPosts = [...posts];
     newPosts[index].likes += 1;
     setPosts(newPosts);
-  };
-  // 수정 버튼을 눌렀을 때 상세 페이지로 이동하는 함수입니다.
-  const handleEdit = (id) => {
-    navigate(`/detail/${id}`);
-  };
-
-  // 삭제 버튼을 눌렀을 때 해당 게시글을 삭제하는 함수입니다.
-  const handleDelete = async (id) => {
-    const docRef = doc(db, 'posts', id);
-    await deleteDoc(docRef);
-    setPosts(posts.filter((post) => post.id !== id));
   };
 
   // 렌더링합니다. 여기서는 감사 내용 입력란, 게시글 검색 및 필터링, 게시글 목록을 표시합니다.

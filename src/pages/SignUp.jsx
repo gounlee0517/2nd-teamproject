@@ -59,10 +59,10 @@ function SignUp() {
       setPasswordConfirmMessage('비밀번호가 달라요. 다시 입력해주세요 !');
       setIsPasswordConfirm(false);
     }
-  }
+  };
   return (
     <>
-    <Header />
+      <Header />
       <h2>회원가입</h2>
       <form>
         <div>
