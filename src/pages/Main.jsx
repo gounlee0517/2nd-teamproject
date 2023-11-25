@@ -19,7 +19,7 @@ const Main = () => {
     HAPPY: '🥰',
     GLOOMY: '🥲',
     FINE: '🙂',
-    NOTGOOD : '🤨',
+    'NOT GOOD' : '🤨'
   };
 
   const handleMood = (value) => {
@@ -159,7 +159,7 @@ const Main = () => {
       <Mainpage>
         <InputSection>
           <div>
-            <H1>Thanks Diary</H1>
+            <H1>THANKS DIARY</H1>
             <br />
             <H4>what are you grateful for today?</H4>
           </div>
@@ -228,21 +228,21 @@ const Main = () => {
             <option value="comments">댓글순</option>
           </select>
 
-          <ThanksList>
+          <ThanksList style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px' }}>
             {posts.map((post, index) => (
-              <div key={index} style={{ border: '1px solid black', padding: '10px' }}>
+              <div key={index} style={{ border: '1px solid #659bcf', padding: '10px' }}>
                 <div onClick={() => handleView(post.id)}>
-                  작성자: {post.userId} / 닉네임: {post.nickname}
-                  작성 시간: {post.createdAt}
-                  기분: {post.mood}
+                  <p>닉네임: {post.nickname}</p> &nbsp;
+                  <p>{post.createdAt}</p> <br />
+                  <p>기분: {post.mood}</p>
                   {post.content &&
                     ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
-                      <div key={i}>{post.content[key]}</div>
+                      <p key={i}>{post.content[key]}</p>
                     ))}
                 </div>
-                조회수: {post.views}
-                좋아요 수: {post.likes}
-                <button onClick={(event) => handleLike(event, post.id, index)}>좋아요</button>
+                <p>조회수: {post.views}</p> &nbsp;
+                <p>좋아요 수: {post.likes}</p>
+                <button onClick={(event) => handleLike(event, post.id, index)}>♡</button>
               </div>
             ))}
           </ThanksList>
@@ -273,7 +273,7 @@ const MoodSection = styled.div`
 const H1 = styled.h1`
   font-size: 60px;
   display: flex;
-  margin-top: 20vh;
+  margin-top: 23vh;
 `;
 const H4 = styled.h4`
   font-size: 25px;
@@ -299,6 +299,7 @@ const MoodDiv = styled.div`
 `;
 const P = styled.p`
   font-size: 18px;
+  font-family: 'Ageo Personal Use';
 `;
 const Button = styled.button`
   width: 150px;
@@ -318,13 +319,11 @@ const Button = styled.button`
 const ThanksSection = styled.div`
   background-color: white;
   border-radius: 130px 130px 0px 0px;
+  padding-bottom: 10vh;
 `;
 const ThanksList = styled.div`
-  margin: 10vh auto 0 auto;
-  display: 'grid';
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-auto-rows: minmax(250px, auto);
-  gap: '20px';
+  margin: 20vh auto 0 auto;
+  width: 90%;
 `;
 const FiveThanks = styled.div``;
 

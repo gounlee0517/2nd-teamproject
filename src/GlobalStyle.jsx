@@ -76,7 +76,7 @@ h4 {
 }
 
 p {
-	font-family: 'Ageo Personal Use';
+	font-family: 'Orbit';
 }
 
 header {

@@ -3,6 +3,7 @@ import { GithubAuthProvider, browserSessionPersistence, getAuth, setPersistence,
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
+import styled from 'styled-components';
 
 function GithubLogin() {
   const provider = new GithubAuthProvider();
@@ -26,9 +27,17 @@ function GithubLogin() {
 
   return (
     <>
-      <button onClick={signInWithGithub}>깃허브 로그인</button>
+      <GithubLoginBtn onClick={signInWithGithub}>Github</GithubLoginBtn>
     </>
   );
 }
+const GithubLoginBtn = styled.button`
+  background-color: #707070;
+  color: white;
+  border-style: none;
+  padding: 10px;
+  font-family: 'Ageo Personal Use';
+  font-weight: bold;
+`
 
 export default GithubLogin;

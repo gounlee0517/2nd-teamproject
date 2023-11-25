@@ -3,6 +3,7 @@ import { browserSessionPersistence, getAuth, GoogleAuthProvider, setPersistence,
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
+import styled from 'styled-components';
 
 function GoogleLogin() {
   const provider = new GoogleAuthProvider();
@@ -28,9 +29,18 @@ function GoogleLogin() {
 
   return (
     <div>
-      <button onClick={signInWithGoogle}>구글 로그인</button>
+      <GoogleLoginBtn onClick={signInWithGoogle}>Google</GoogleLoginBtn>
     </div>
   );
 }
+
+const GoogleLoginBtn = styled.button`
+  border-style: none;
+  background-color: #ff6f74;
+  color: white;
+  padding: 10px 20px;
+  font-family: 'Ageo Personal Use';
+  font-weight: bold;
+`
 
 export default GoogleLogin;

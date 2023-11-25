@@ -43,7 +43,7 @@ function Header() {
               >
                 Logout
               </STli>
-
+              &nbsp;&nbsp;
               <STli
                 onClick={() => {
                   myPageClick();

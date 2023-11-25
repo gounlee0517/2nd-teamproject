@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
+import styled from 'styled-components';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -63,31 +64,84 @@ function SignUp() {
   return (
     <>
       <Header />
-      <h2>회원가입</h2>
-      <form>
-        <div>
-          <label>이메일</label>
+      <STSignupTxt>signup</STSignupTxt>
+      <STinputbox>
+        <Img src='img/night.jpg' />
+        <SignupInputSection>
+          <SignupInput
+            type="email"
+            value={email}
+            name="email"
+            onChange={onChange}
+            placeholder="email"
+            required
+          ></SignupInput>
           <br />
-          <input type="email" value={email} name="email" onChange={onChange} required></input>
-        </div>
-        <div>
-          <label>비밀번호</label>
+          <SignupInput
+            type="password"
+            value={password}
+            name="password"
+            onChange={onChange}
+            placeholder="password"
+            required
+          ></SignupInput>
           <br />
-          <input type="password" value={password} name="password" onChange={onChange} required></input>
-        </div>
-        <div>
-          <label>비밀번호 확인</label>
+          <SignupInput
+            type="password"
+            value={passwordConfirm}
+            name="passwordConfirm"
+            onChange={onChange}
+            placeholder="password confirm"
+            required
+          ></SignupInput>
           <br />
-          <input type="password" value={passwordConfirm} name="passwordConfirm" onChange={onChange} required></input>
-          <label onChange={onChangePasswordConfirm}></label>
-        </div>
-
-        <button onClick={signUp}>회원가입</button>
-      </form>
+          <SignupBtn onClick={signUp}>sign up!</SignupBtn>
+        </SignupInputSection>
+      </STinputbox>
 
       <Footer />
     </>
   );
 }
+
+const STSignupTxt = styled.h2`
+  margin: 10vh auto 0 auto;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Futura';
+`;
+const STinputbox = styled.div`
+  background-color: white;
+  width: 400px;
+  height: 500px;
+  margin: 3vh auto 13vh auto;
+  padding: 50px;
+`;
+const Img = styled.img`
+  width: 180px;
+  border-radius: 90px 90px 0px 0px;
+`;
+const SignupInputSection = styled.div`
+  margin: 5vh auto;
+`;
+const SignupInput = styled.input`
+  width: 180px;
+  padding: 7px;
+  margin-bottom: 10px;
+  background-color: #c9e6ff;
+  border-style: none;
+  font-size: 18px;
+  font-family: 'Ageo Personal Use';
+`;
+const SignupBtn = styled.button`
+  padding: 7px 40px;
+  border-style: none;
+  border-radius: 30px;
+  margin-top: 20px;
+  font-family: 'Ageo Personal Use';
+  background-color: #072541;
+  color: white;
+  cursor: pointer;
+`;
 
 export default SignUp;

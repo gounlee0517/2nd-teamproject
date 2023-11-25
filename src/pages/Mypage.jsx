@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import usersData from '../usersData.json';
 import ThanksBox from '../components/Mypage/ThanksBox';
+import Header from '../components/Home/Header';
 
 function Mypage() {
   const { id } = useParams(); // path parameter 가져오기 : userId
@@ -39,9 +40,7 @@ function Mypage() {
   const navigate = useNavigate();
   return (
     <>
-      <Header>
-        <HomeBtn onClick={() => navigate('/')}>오늘의 감사일기</HomeBtn>
-      </Header>
+      <Header />
       <ThanksDiary>
         <ProfileBox>
           {/* <ProfileImg src={myData.profileImg} alt="profile" />
@@ -56,21 +55,6 @@ function Mypage() {
 }
 
 export default Mypage;
-
-const Header = styled.header`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-
-  background-color: pink;
-`;
-
-const HomeBtn = styled.button`
-  border: none;
-  background-color: transparent;
-`;
 
 const ProfileBox = styled.div`
   position: relative;

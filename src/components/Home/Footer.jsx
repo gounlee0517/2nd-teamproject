@@ -13,8 +13,6 @@ function Footer() {
 const FooterStyle = styled.footer`
   width: 80%;
   padding: 30px;
-  padding-top: 20vh;
-  background-color: white;
   margin: 0 auto;
 `
 

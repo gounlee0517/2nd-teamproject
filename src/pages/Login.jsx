@@ -63,38 +63,44 @@ const Login = () => {
   return (
     <>
       <Header />
-
-      <div>
-        <STloginTxt>Thanks diary</STloginTxt>
-        <STinputbox>
-          <h3>로그인</h3>
+      <STloginTxt>Login</STloginTxt>
+      <STinputbox>
+        <Img src="img/cloud.jpg" />
+        <LoginInputSection>
+          <LoginInput
+            type="email"
+            value={email}
+            name="email"
+            onChange={onChange}
+            placeholder="email"
+            required
+          ></LoginInput>
           <br />
-          <div>
-            <label>이메일</label>
-            <br />
-            <input type="email" value={email} name="email" onChange={onChange} required></input>
-          </div>
-          <div>
-            <label>비밀번호</label>
-            <br />
-            <input type="password" value={password} name="password" onChange={onChange} required></input>
-          </div>
-          <a
+          <LoginInput
+            type="password"
+            value={password}
+            name="password"
+            onChange={onChange}
+            placeholder="password"
+            required
+          ></LoginInput>
+          <br />
+          <SignupA
             onClick={() => {
               navigate('/signup');
             }}
           >
-            회원가입
-          </a>
+            signup
+          </SignupA>
           <br />
-          <button onClick={signIn}>로그인</button>
+          <LoginBtn onClick={signIn}>login</LoginBtn>
+        </LoginInputSection>
+        <SocialLoginBtn>
+          <GithubLogin />
+          <GoogleLogin />
+        </SocialLoginBtn>
+      </STinputbox>
 
-          <div>
-            <GithubLogin />
-            <GoogleLogin />
-          </div>
-        </STinputbox>
-      </div>
       <Footer />
     </>
   );
@@ -103,13 +109,54 @@ const Login = () => {
 const STloginTxt = styled.h2`
   margin: 10vh auto 0 auto;
   font-size: 30px;
+  font-weight: bold;
+  font-family: 'Futura';
 `;
 const STinputbox = styled.div`
-  background-color: pink;
-  width: 600px;
-  height: 400px;
-  margin: 3vh auto 15vh auto;
+  background-color: white;
+  width: 400px;
+  height: 550px;
+  margin: 3vh auto 13vh auto;
   padding: 50px;
+`;
+const Img = styled.img`
+  width: 180px;
+  border-radius: 90px 90px 0px 0px;
+`;
+const LoginInputSection = styled.div`
+  margin: 5vh auto;
+`;
+const LoginInput = styled.input`
+  width: 180px;
+  padding: 7px;
+  margin-bottom: 10px;
+  background-color: #c9e6ff;
+  border-style: none;
+  font-size: 18px;
+  font-family: 'Ageo Personal Use';
+`;
+const SignupA = styled.a`
+  margin-left: 10vw;
+  font-size: 15px;
+  font-family: 'Ageo Personal Use';
+  cursor: pointer;
+`;
+const LoginBtn = styled.button`
+  padding: 7px 40px;
+  border-style: none;
+  border-radius: 30px;
+  margin-top: 20px;
+  font-family: 'Ageo Personal Use';
+  background-color: #072541;
+  color: white;
+  cursor: pointer;
+`;
+const SocialLoginBtn = styled.div`
+  width: 180px;
+  margin: 5vh auto 0 auto;
+  display: grid;
+  grid-template-columns: 90px 90px;
+  grid-template-rows: 1fr;
 `;
 
 export default Login;

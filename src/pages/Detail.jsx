@@ -81,7 +81,6 @@ const Detail = () => {
       <Header />
       <button onClick={handleGoHome}>홈으로 가기</button>
       <h2>{post.nickname}</h2>
-      <p>작성자: {post.userId}</p>
       <p>작성 시간: {post.createdAt}</p>
       {post.content && (
         <div>
