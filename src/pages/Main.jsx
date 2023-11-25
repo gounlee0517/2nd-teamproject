@@ -1,28 +1,24 @@
-// Main.jsx
-// React와 필요한 hook들을 불러옵니다.
 import React, { useState, useEffect } from 'react';
-// react-router-dom에서 페이지 이동을 위한 hook을 불러옵니다.
 import { useNavigate } from 'react-router-dom';
-// Firebase 설정과 Firestore에서 필요한 함수들을 불러옵니다.
 import { db } from '../firebase';
 import { collection, addDoc, doc, updateDoc, query, orderBy, where } from 'firebase/firestore';
 import { increment } from 'firebase/firestore';
 import { getDocs, deleteDoc } from 'firebase/firestore';
+import styled from 'styled-components';
 
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
 import { useSelector } from 'react-redux';
 
-// Main 컴포넌트를 정의합니다.
 const Main = () => {
   // 기분을 저장하는 state를 추가합니다.
   const [mood, setMood] = useState('');
   const [selectedMood, setSelectedMood] = useState(null);
   const moodEmojis = {
-    '기분 좋음': '(❁´◡`❁)',
-    '우울하거나 슬픔': '(T_T)',
-    '그냥 쏘쏘': '(⊙_⊙;)',
-    '최고의 하루를 보냈어': '(☞ﾟヮﾟ)☞╰(*°▽°*)╯☜(ﾟヮﾟ☜)'
+    HAPPY: '🥰',
+    GLOOMY: '🥲',
+    FINE: '🙂',
+    NOTGOOD : '🤨',
   };
 
   const handleMood = (value) => {
@@ -185,64 +181,70 @@ const Main = () => {
   return (
     <>
       <Header />
-      <main>
-        <div>5감사사 설명</div>
-        <div>
-          <input
-            type="text"
-            name="oneThank"
-            value={input.oneThank}
-            onChange={handleInput}
-            placeholder="첫 번째 감사한 사항을 입력하세요."
-          />
-          <input
-            type="text"
-            name="twoThank"
-            value={input.twoThank}
-            onChange={handleInput}
-            placeholder="두 번째 감사한 사항을 입력하세요."
-          />
-          <input
-            type="text"
-            name="threeThank"
-            value={input.threeThank}
-            onChange={handleInput}
-            placeholder="세 번째 감사한 사항을 입력하세요."
-          />
-          <input
-            type="text"
-            name="fourThank"
-            value={input.fourThank}
-            onChange={handleInput}
-            placeholder="네 번째 감사한 사항을 입력하세요."
-          />
-          <input
-            type="text"
-            name="fiveThank"
-            value={input.fiveThank}
-            onChange={handleInput}
-            placeholder="다섯 번째 감사한 사항을 입력하세요."
-          />
-        </div>
-        <div>오늘의 기분</div>
-        <div>
-          <p onClick={() => handleMood('기분 좋음')}>
-            {selectedMood === '기분 좋음' ? moodEmojis['기분 좋음'] : '기분 좋음'}
-          </p>
-          <p onClick={() => handleMood('우울하거나 슬픔')}>
-            {selectedMood === '우울하거나 슬픔' ? moodEmojis['우울하거나 슬픔'] : '우울하거나 슬픔'}
-          </p>
-          <p onClick={() => handleMood('그냥 쏘쏘')}>
-            {selectedMood === '그냥 쏘쏘' ? moodEmojis['그냥 쏘쏘'] : '그냥 쏘쏘'}
-          </p>
-          <p onClick={() => handleMood('최고의 하루를 보냈어')}>
-            {selectedMood === '최고의 하루를 보냈어' ? moodEmojis['최고의 하루를 보냈어'] : '최고의 하루를 보냈어'}
-          </p>
-          <button onClick={handleSubmit}>게시</button>
-        </div>
+      <Mainpage>
+        <InputSection>
+          <div>
+            <H1>Thanks Diary</H1>
+            <br />
+            <H4>what are you grateful for today?</H4>
+          </div>
 
-        <div>게시글 필터링</div>
-        <div>
+          <InputDiv>
+            <MoodSection>
+              <MoodDiv>
+                <P onClick={() => handleMood('HAPPY')}>{selectedMood === 'HAPPY' ? moodEmojis['HAPPY'] : 'HAPPY'}</P>
+                &nbsp; &nbsp;
+                <P onClick={() => handleMood('GLOOMY')}>
+                  {selectedMood === 'GLOOMY' ? moodEmojis['GLOOMY'] : 'GLOOMY'}
+                </P>
+                &nbsp; &nbsp;
+                <P onClick={() => handleMood('FINE')}>{selectedMood === 'FINE' ? moodEmojis['FINE'] : 'FINE'}</P>
+                &nbsp; &nbsp;
+                <P onClick={() => handleMood('NOT GOOD')}>
+                  {selectedMood === 'NOT GOOD' ? moodEmojis['NOT GOOD'] : 'NOT GOOD'}
+                </P>
+              </MoodDiv>
+            </MoodSection>
+            <Input
+              type="text"
+              name="oneThank"
+              value={input.oneThank}
+              onChange={handleInput}
+              placeholder="첫 번째 감사한 사항을 입력하세요."
+            />
+            <Input
+              type="text"
+              name="twoThank"
+              value={input.twoThank}
+              onChange={handleInput}
+              placeholder="두 번째 감사한 사항을 입력하세요."
+            />
+            <Input
+              type="text"
+              name="threeThank"
+              value={input.threeThank}
+              onChange={handleInput}
+              placeholder="세 번째 감사한 사항을 입력하세요."
+            />
+            <Input
+              type="text"
+              name="fourThank"
+              value={input.fourThank}
+              onChange={handleInput}
+              placeholder="네 번째 감사한 사항을 입력하세요."
+            />
+            <Input
+              type="text"
+              name="fiveThank"
+              value={input.fiveThank}
+              onChange={handleInput}
+              placeholder="다섯 번째 감사한 사항을 입력하세요."
+            />
+            <Button onClick={handleSubmit}>POST</Button>
+          </InputDiv>
+        </InputSection>
+
+        <ThanksSection>
           <select value={filter} onChange={(e) => setFilter(e.target.value)}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
@@ -250,30 +252,105 @@ const Main = () => {
             <option value="likes">좋아요순</option>
             <option value="comments">댓글순</option>
           </select>
-        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-          {posts.map((post, index) => (
-            <div key={index} style={{ border: '1px solid black', padding: '10px' }}>
-              <div onClick={() => handleView(post.id)}>
-                작성자: {post.userId} / 닉네임: {post.nickname}
-                작성 시간: {post.createdAt}
-                기분: {post.mood}
-                {post.content &&
-                  ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
-                    <div key={i}>{post.content[key]}</div>
-                  ))}
+          <ThanksList>
+            {posts.map((post, index) => (
+              <div key={index} style={{ border: '1px solid black', padding: '10px' }}>
+                <div onClick={() => handleView(post.id)}>
+                  작성자: {post.userId} / 닉네임: {post.nickname}
+                  작성 시간: {post.createdAt}
+                  기분: {post.mood}
+                  {post.content &&
+                    ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
+                      <div key={i}>{post.content[key]}</div>
+                    ))}
+                </div>
+                조회수: {post.views}
+                좋아요 수: {post.likes}
+                <button onClick={(event) => handleLike(event, post.id, index)}>좋아요</button>
               </div>
-              조회수: {post.views}
-              좋아요 수: {post.likes}
-              <button onClick={(event) => handleLike(event, post.id, index)}>좋아요</button>
-            </div>
-          ))}
-        </div>
-      </main>
+            ))}
+          </ThanksList>
+        </ThanksSection>
+      </Mainpage>
       <Footer />
     </>
   );
 };
+
+const Mainpage = styled.main`
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+`;
+const InputSection = styled.div`
+  background-color: #659bcf;
+  height: 500px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+`;
+const MoodSection = styled.div`
+  &:button {
+    margin-top: 20px;
+  }
+`;
+const H1 = styled.h1`
+  font-size: 60px;
+  display: flex;
+  margin-top: 20vh;
+`;
+const H4 = styled.h4`
+  font-size: 25px;
+  display: flex;
+`;
+const InputDiv = styled.div`
+  margin: 5vh auto 0 auto;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+`;
+const Input = styled.input`
+  padding: 10px;
+  margin-top: 10px;
+  border-style: none;
+  border-radius: 7px;
+  text-align: center;
+`;
+const MoodDiv = styled.div`
+  margin: 5vh auto 10px 2vw;
+  display: flex;
+  cursor: pointer;
+`;
+const P = styled.p`
+  font-size: 18px;
+`;
+const Button = styled.button`
+  width: 150px;
+  padding: 10px;
+  margin: 4vh auto 0 auto;
+  border-style: none;
+  border-radius: 30px;
+  background-color: #072541;
+  color: white;
+  transition: all 0.5s;
+
+  &:hover {
+    background-color: white;
+    color: #072541;
+  }
+`;
+const ThanksSection = styled.div`
+  background-color: white;
+  border-radius: 130px 130px 0px 0px;
+`;
+const ThanksList = styled.div`
+  margin: 10vh auto 0 auto;
+  display: 'grid';
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: minmax(250px, auto);
+  gap: '20px';
+`;
+const FiveThanks = styled.div``;
 
 export default Main;

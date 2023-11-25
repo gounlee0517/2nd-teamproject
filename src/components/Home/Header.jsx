@@ -24,7 +24,7 @@ function Header() {
             navigate('/');
           }}
         >
-          thanks diary
+          Thanks diary
         </STh1>
         <STul>
           {isLogin.isLogined ? (
@@ -35,7 +35,7 @@ function Header() {
                   dispatch(setIslogined(false));
                 }}
               >
-                logout
+                Logout
               </STli>
 
               <STli>my page</STli>
@@ -57,23 +57,24 @@ function Header() {
   );
 }
 
-const STheader = styled.div`
+const STheader = styled.header`
+  width: 80%;
   height: 60px;
   margin: 0 auto;
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: pink;
+  background-color: transparent;
 `;
-const STh1 = styled.h1`
-  margin-left: 20px;
+const STh1 = styled.h2`
   cursor: pointer;
 `;
 const STul = styled.ul`
   display: flex;
 `;
 const STli = styled.li`
-  margin-right: 20px;
   cursor: pointer;
 `;
 

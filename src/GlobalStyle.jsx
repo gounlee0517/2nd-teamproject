@@ -30,6 +30,8 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 	text-align: center;
+	background-color: #659bcf;
+	color: #072541;
 }
 ol, ul {
 	list-style: none;
@@ -61,6 +63,25 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1 {
+	font-family: 'Cabinest';
+	font-weight: bold;
+}
+
+h4 {
+	font-family: 'Ageo Personal Use';
+	letter-spacing: 3px;
+}
+
+p {
+	font-family: 'Ageo Personal Use';
+}
+
+header {
+	font-family: 'Futura';
+	font-weight: bold;
 }
 
 

@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { db, arrayUnion } from '../firebase';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { increment } from 'firebase/firestore';
+import Header from '../components/Home/Header';
 
 // Detail 컴포넌트를 정의합니다.
 const Detail = () => {
@@ -77,6 +78,7 @@ const Detail = () => {
   // 렌더링합니다. 여기서는 게시글 내용, 좋아요 버튼, 댓글 기능 등을 표시합니다.
   return (
     <div>
+      <Header />
       <button onClick={handleGoHome}>홈으로 가기</button>
       <h2>{post.nickname}</h2>
       <p>작성자: {post.userId}</p>
