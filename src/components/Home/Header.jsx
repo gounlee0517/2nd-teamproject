@@ -4,23 +4,27 @@ import styled from 'styled-components';
 import { getAuth, onAuthStateChanged, setPersistence } from 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
+import { setUser } from '../../redux/modules/userInfo';
 
 function Header() {
+  const auth = getAuth();
   const navigate = useNavigate();
+
   const onLogOutClick = () => {
-    const auth = getAuth();
     auth.signOut();
+    dispatch(setIslogined(false));
+    dispatch(setUser(''));
     navigate('/');
   };
 
   const myPageClick = () => {
-    const auth = getAuth();
     navigate('/mypage/' + auth.currentUser.uid);
   };
 
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state);
-  console.log('header: ', isLogin.isLogined);
+  // console.log('header: ', auth.currentUser.displayName);
+  console.log(auth.currentUser);
   console.log(sessionStorage.length);
   return (
     <>
@@ -35,10 +39,10 @@ function Header() {
         <STul>
           {isLogin.isLogined ? (
             <>
+              {/* <STli>{auth.currentUser.displayName || '닉네임을 설정하세요'}</STli> */}
               <STli
                 onClick={() => {
                   onLogOutClick();
-                  dispatch(setIslogined(false));
                 }}
               >
                 Logout

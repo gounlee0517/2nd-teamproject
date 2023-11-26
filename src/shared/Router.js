@@ -4,6 +4,7 @@ import Login from '../pages/Login';
 import Main from '../pages/Main';
 import Detail from '../pages/Detail';
 import Mypage from '../pages/Mypage';
+import SetProfile from '../pages/SetProfile';
 
 const Router = () => {
   return (
@@ -14,6 +15,7 @@ const Router = () => {
         <Route path="signup" element={<SignUp />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/mypage/:id" element={<Mypage />} />
+        <Route path="/setprofile/:id" element={<SetProfile />} />
       </Routes>
     </BrowserRouter>
   );

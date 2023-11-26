@@ -5,7 +5,7 @@ import { collection, addDoc, doc, updateDoc, query, orderBy, where } from 'fireb
 import { increment } from 'firebase/firestore';
 import { getDocs, deleteDoc } from 'firebase/firestore';
 import styled from 'styled-components';
-import { FaHeart } from "react-icons/fa"
+import { FaHeart } from 'react-icons/fa';
 
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
@@ -20,7 +20,7 @@ const Main = () => {
     HAPPY: '🥰',
     GLOOMY: '🥲',
     FINE: '🙂',
-    'NOT GOOD' : '🤨'
+    'NOT GOOD': '🤨'
   };
 
   const handleMood = (value) => {
@@ -79,6 +79,7 @@ const Main = () => {
 
   // 게시 버튼을 눌렀을 때 실행되는 함수입니다.
   const isLogin = useSelector((state) => state);
+  console.log(isLogin.isLogined);
   const handleSubmit = () => {
     // input이 모두 채워져 있는지 확인합니다.
     console.log(isLogin.isLogined);
@@ -98,7 +99,7 @@ const Main = () => {
 
     const newPost = {
       userId: auth.uid,
-      nickname: auth.displayName || '닉네임을 변경하세요',
+      nickname: auth.displayName,
       createdAt: new Date().toLocaleString(),
       content: input,
       mood: mood, // 이 부분이 추가된 것입니다.
@@ -324,7 +325,7 @@ const ThanksSection = styled.div`
 `;
 const Select = styled.select`
   transform: translateX(-32vw) translateY(16vh);
-`
+`;
 const ThanksList = styled.div`
   margin: 20vh auto 0 auto;
   width: 90%;

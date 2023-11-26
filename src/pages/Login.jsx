@@ -16,6 +16,7 @@ import GithubLogin from '../components/Login/GithubLogin';
 
 import { useDispatch } from 'react-redux';
 import { setIslogined } from '../redux/modules/isLogined';
+import { setUser } from '../redux/modules/userInfo';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -50,8 +51,18 @@ const Login = () => {
     setPersistence(auth, browserSessionPersistence);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
+      console.log(auth.currentUser);
       dispatch(setIslogined(true));
+      const tmp = {
+        email: auth.currentUser.email,
+        nickname: auth.currentUser.displayName || '이름을 설정하세요',
+        profileImg:
+          auth.currentUser.photoURL ||
+          'https://img.freepik.com/premium-vector/default-profile-picture-ui-element-template_106317-36159.jpg'
+      };
+      dispatch(setUser(tmp));
+      sessionStorage.setItem('userInfo', JSON.stringify(tmp));
+
       alert('로그인에 성공하셨습니다');
       navigate('/');
     } catch (error) {

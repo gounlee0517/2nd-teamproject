@@ -1,33 +1,28 @@
-const SET_UID ="userInfo/SET_UID";
-// const SET_NICKNAME ="userInfo/SET_NICKNAME";
-// const SET_IMG ="userInfo/SET_IMG";
+import { getAuth } from '@firebase/auth';
+const auth = getAuth();
 
-export const setUid= (payload) => {
-    return {type: SET_UID, payload};
-}
-// export const setNickname = (payload) => {
-//     return {type: SET_NICKNAME, payload};
-// }
-// export const setImg = (payload) => {
-//     return {type: SET_IMG, payload};
-// }
+const SET_USER = 'userInfo/SET_UID';
+const EDIT_IMG = 'userInfo/EDIT_IMG';
 
-const initialState ='';
+export const setUser = (payload) => {
+  sessionStorage.removeItem('userInfo');
+  return { type: SET_USER, payload };
+};
 
-const userInfo = (state=initialState, action) => {
-    switch (action.type) {
-        case SET_UID:
-            const activeUid = action.payload;
-            return activeUid;
-        // case SET_NICKNAME:
-        //     const activeNickname = action.payload;
-        //     return activeNickname; 
-        // case SET_IMG:
-        //     const activeImg = action.payload;
-        //     return activeImg; 
-        default:
-            return state;
-    }
-}
+export const editIMG = (payload) => {
+  return { type: EDIT_IMG, payload };
+};
+
+let initialState = sessionStorage.length === 0 ? ' ' : JSON.parse(sessionStorage.getItem('userInfo'));
+
+const userInfo = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_USER:
+      const activeUser = { ...action.payload };
+      return activeUser;
+    default:
+      return state;
+  }
+};
 
 export default userInfo;
