@@ -2,11 +2,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import { getAuth, updateProfile } from '@firebase/auth';
 import { editIMG, editName } from '../redux/modules/userInfo';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Home/Header';
 import { useNavigate } from 'react-router';
 
-function SetProfile() {
+function SetProfile({ isOpen, closeModal, myData, setMyData }) {
+  // console.log(myData);
   const dispatch = useDispatch();
   const storage = getStorage();
   const imageListRef = ref(storage);
@@ -35,18 +36,21 @@ function SetProfile() {
       photoURL: imageUrl
     });
     dispatch(editIMG(imageUrl));
+    setMyData({ ...myData, profileImg: imageUrl });
   };
+
   const editNameHandler = () => {
+    const editedName = inputName.current.value;
     updateProfile(auth.currentUser, {
-      displayName: inputName.current.value
+      displayName: editedName
     });
-    dispatch(editName(inputName.current.value));
+    dispatch(editName(editedName));
+    setMyData({ ...myData, nickname: editedName });
   };
 
   return (
     <>
-      <Header />
-      <div>
+      <div style={{ display: isOpen ? 'block' : 'none' }}>
         <input
           type="file"
           onChange={(event) => {
@@ -59,6 +63,8 @@ function SetProfile() {
 
         <input type="text" ref={inputName} />
         <button onClick={editNameHandler}>이름 변경하기</button>
+
+        <button onClick={closeModal}>창 닫기</button>
       </div>
     </>
   );

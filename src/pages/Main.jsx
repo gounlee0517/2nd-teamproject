@@ -67,7 +67,7 @@ const Main = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [filter]);
 
   // input의 변경 사항을 처리하는 함수입니다.
   const handleInput = (event) => {
@@ -88,15 +88,17 @@ const Main = () => {
         alert('감사한 사항을 5가지 모두 입력해주세요.');
         return;
       }
+      if (getAuth().currentUser.displayName === null) {
+        alert('My page에서 이름을 설정한 후 이용해 주세요.');
+        return;
+      }
     } else {
       alert('로그인 후 이용해주세요.');
       return;
     }
 
     // 새 게시글 객체를 만듭니다.
-
     const auth = getAuth().currentUser;
-
     const newPost = {
       userId: auth.uid,
       nickname: auth.displayName,
@@ -230,21 +232,28 @@ const Main = () => {
             <option value="comments">댓글순</option>
           </Select>
 
-          <ThanksList style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px' }}>
+          <ThanksList style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
             {posts.map((post, index) => (
-              <div key={index} style={{ border: '1px solid #659bcf', padding: '10px' }}>
+              <div key={index} style={{ backgroundColor: '#c9e6ff', padding: '10px' }}>
                 <div onClick={() => handleView(post.id)}>
-                  <p>닉네임: {post.nickname}</p> &nbsp;
-                  <p>{post.createdAt}</p> <br />
-                  <p>기분: {post.mood}</p>
-                  {post.content &&
-                    ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
-                      <p key={i}>{post.content[key]}</p>
-                    ))}
+                  <ThanksListTime>{post.createdAt}</ThanksListTime>
+                  <ThanksListUser>
+                    <p>{post.nickname}</p> &nbsp;
+                    <br />
+                    <p>{post.mood}</p>
+                  </ThanksListUser>
+                  <FiveThanksList>
+                    {post.content &&
+                      ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
+                        <p key={i}>{post.content[key]}</p>
+                      ))}
+                  </FiveThanksList>
                 </div>
-                <p>조회수: {post.views}</p> &nbsp;
-                <p>좋아요 수: {post.likes}</p>
-                <button onClick={(event) => handleLike(event, post.id, index)}>♡</button>
+                <Viewnlike>
+                  <p>{post.views} views</p> &nbsp;&nbsp;
+                  <p>{post.likes} likes</p>
+                </Viewnlike>
+                <LikeBtn onClick={(event) => handleLike(event, post.id, index)}>♥</LikeBtn>
               </div>
             ))}
           </ThanksList>
@@ -330,6 +339,39 @@ const ThanksList = styled.div`
   margin: 20vh auto 0 auto;
   width: 90%;
 `;
-const FiveThanks = styled.div``;
+const ThanksListTime = styled.p`
+  font-size: 11px;
+  color: #707070;
+  text-align: right;
+`;
+const ThanksListUser = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 10px;
+  padding: 15px;
+  border-bottom: 1px solid white;
+`;
+const FiveThanksList = styled.div`
+  text-align: left;
+  padding: 20px;
+  line-height: 18px;
+`;
+const LikeBtn = styled.button`
+  padding: 2px 15px;
+  border-style: none;
+  border-radius: 30px;
+  font-size: 18px;
+  background-color: #ff6f74;
+  color: white;
+`;
+const Viewnlike = styled.div`
+  display: flex;
+  justify-content: center;
+
+  font-size: 12px;
+  margin: 0 auto 15px auto;
+  color: #707070;
+`;
 
 export default Main;

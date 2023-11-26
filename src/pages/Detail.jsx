@@ -85,8 +85,8 @@ const Detail = () => {
       <ThanksDetailPage>
         <UserDetail>
           <h2>{post.nickname}</h2>
-          <p>작성 시간: {post.createdAt}</p>
-          <p>기분: {post.mood}</p>
+          <p>{post.createdAt}</p>
+          <p>{post.mood}</p>
         </UserDetail>
 
         {post.content && (
@@ -108,21 +108,23 @@ const Detail = () => {
           <h3>comments</h3>
           <br />
           <form onSubmit={handleComment}>
-            <input
+            <CommentInput
               type="text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="댓글을 입력하세요."
             />
-            <button type="submit">submit</button>
+            <SubmitBtn type="submit">submit</SubmitBtn>
           </form>
           <br />
           {comments.map((comment, i) => (
-            <div key={i}>
-              <p>작성자: {comment.userId}</p>
-              <p>작성 시간: {comment.createdAt}</p>
-              <p>{comment.text}</p>
-            </div>
+            <Comment key={i}>
+              <CommentUser>
+                <p>{comment.userId}</p>
+                <p>{comment.createdAt}</p>
+              </CommentUser>
+              <CommentTxt>{comment.text}</CommentTxt>
+            </Comment>
           ))}
         </CommentDiv>
       </ThanksDetailPage>
@@ -138,6 +140,9 @@ const ThanksDetailPage = styled.div`
   background-color: white;
 `;
 const ThanksList = styled.div`
+  width: 500px;
+  margin: 0 auto;
+  text-align: left;
   padding: 50px;
   line-height: 30px;
 `;
@@ -152,14 +157,43 @@ const ViewnLike = styled.div`
   padding-bottom: 50px;
   display: flex;
   color: #707070;
-  margin-left: 600px;
+  margin-left: 50px;
   margin-bottom: -30px;
+`;
+const CommentInput = styled.input`
+  padding: 10px 100px;
+  margin-right: 30px;
+  border-style: none;
+  background-color: #659bcf;
+  border-radius: 30px;
+`;
+const SubmitBtn = styled.button`
+  padding: 10px 15px;
+  border-style: none;
+  border-radius: 30px;
+  color: #707070;
 `;
 const CommentDiv = styled.div`
   width: 90%;
   margin: 0 auto;
   padding: 50px;
   border-top: 1px solid #659bcf;
+`;
+const Comment = styled.div`
+  padding: 10px;
+  background-color: #c9e6ff;
+  border-radius: 30px;
+`;
+const CommentUser = styled.div`
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  padding: 10px;
+  color: #707070;
+`;
+const CommentTxt = styled.p`
+  text-align: left;
+  padding: 10px;
 `;
 
 export default Detail;

@@ -11,19 +11,23 @@ import ThanksBox from '../components/Mypage/ThanksBox';
 import Header from '../components/Home/Header';
 import { useSelector } from 'react-redux';
 import { getAuth } from '@firebase/auth';
+import SetProfile from './SetProfile';
 
 function Mypage() {
   const auth = getAuth();
   const { id } = useParams(); // path parameter 가져오기 : userId
   const [thankList, setThanks] = useState([]); //firebase에서 읽어온 정보 state
   const [rnd, setRnd] = useState('true'); //화면 랜더링 state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   //firebase에서 정보 읽어오기, 의존성 배열에 rnd값 들어감
   useEffect(() => {
     const initialState = [];
     const fetchData = async () => {
       //collection 이름이 posts인 모든 document 가져오기
-      const q = query(collection(db, 'posts'), where('userId', '==', id), orderBy('createdAt'));
+      const q = query(collection(db, 'posts'), where('userId', '==', id), orderBy('createdAt', 'desc'));
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
@@ -36,19 +40,19 @@ function Mypage() {
   }, [rnd]);
   console.log(thankList);
 
-  // const myThanks = thankList.filter((thanks) => thanks.userID === id); //id에 해당하는 감사일기
-  //merge 시 auto api 으로 수정
-  const myData = useSelector((state) => state.setUser);
+  const [myData, setMyData] = useState(useSelector((state) => state.setUser));
+
+  // const myData = useSelector((state) => state.setUser);
   console.log(myData);
 
-  const navigate = useNavigate();
   return (
     <>
       <Header />
       <ThanksDiary>
         <ProfileBox>
           <ProfileImg src={myData.profileImg} alt="profile" />
-          <ProfileName onClick={() => navigate('/setprofile/' + id)}>{myData.nickname}</ProfileName>
+          <ProfileName onClick={openModal}>{myData.nickname}</ProfileName>
+          <SetProfile isOpen={isModalOpen} closeModal={closeModal} myData={myData} setMyData={setMyData} />
         </ProfileBox>
         {thankList.map((thank) => (
           <ThanksBox key={thank.id} thanks={thank} rnd={rnd} setRnd={setRnd} />
@@ -72,7 +76,6 @@ const ProfileBox = styled.div`
 const ProfileImg = styled.img`
   border-radius: 50%;
   margin-bottom: 20px;
-
   width: 150px;
   height: 150px;
 `;

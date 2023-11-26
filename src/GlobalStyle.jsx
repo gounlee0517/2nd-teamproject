@@ -1,4 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
+import Cabinest from './assets/Cabinest.otf';
+import AgeoPersonalUse from './assets/AgeoPersonalUse.otf'
+import intrepid from './assets/intrepid.ttf'
+import Orbit from './assets/Orbit.ttf'
 
 //reset.css + box-sizing: border-box + index.css
 const GlobalStyle = createGlobalStyle`
@@ -80,10 +84,37 @@ p {
 }
 
 header {
-	font-family: 'Futura';
+	font-family: 'Intrepid';
 	font-weight: bold;
+	font-size: 19px;
 }
-
+ 
+@font-face {
+	font-family: 'Cabinest';
+	src: local('Cabinest'),
+	url(${Cabinest}) format('truetype');
+	font-weight: bolder;
+	unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+	font-family: 'Ageo Personal Use';
+	src: local('AgeoPersonalUse'),
+	url(${AgeoPersonalUse}) format('truetype');
+	unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+	font-family: 'Intrepid';
+	src: local('intrepid'),
+	url(${intrepid}) format('truetype');
+	font-weight: bolder;
+	unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+	font-family: 'Orbit';
+	src: local('Orbit'),
+	url(${Orbit}) format('truetype');
+	unicode-range: U+AC00-D7A3;
+}
 
 `;
 

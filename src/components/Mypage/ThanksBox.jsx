@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router';
 
 function ThanksBox({ thanks, rnd, setRnd }) {
   const { id, content, comments, createdAt, likes, mood, nickname, userId, views } = thanks;
-  console.log(thanks);
   const navigate = useNavigate();
 
   //수정버튼 눌렀는지 확인
@@ -185,18 +184,21 @@ const Container = styled.div`
   /* align-items: center; */
 
   width: 600px;
-  height: 350px;
+  height: 400px;
   margin: 20px auto;
   padding: 20px;
 
   border: none;
-  border-radius: 15px;
+  border-radius: 50px;
 
-  background-color: #f8d1d7;
+  background-color: white;
 `;
 
 const CreatedDate = styled.p`
-  margin: 10px 25px;
+  border-bottom: 1px solid #d9d9d9;
+  width: 60%;
+  padding: 10px;
+  margin: 10px auto 25px auto;
   font-size: 20px;
 `;
 
@@ -226,11 +228,12 @@ const Button = styled.button`
   border: none;
   border-radius: 7px;
 
-  background-color: white;
+  background-color: #072541;
+  color: white;
 
   &:hover {
     cursor: pointer;
-    background-color: lightpink;
+    background-color: #707070;
   }
 `;
 
@@ -252,7 +255,7 @@ const ThankOrder = styled.p`
 `;
 
 const ThankContent = styled.p`
-  background-color: white;
+  background-color: #c9e6ff;
   height: 25px;
   width: 480px;
   margin: 5px 10px;
@@ -269,7 +272,7 @@ const Div = styled.div`
   justify-content: right;
 
   margin-top: 15px;
-  margin-right: 20px;
+  margin-right: 50px;
 `;
 
 const Like = styled.p`
