@@ -105,7 +105,7 @@ const Detail = () => {
         </ViewnLike>
 
         <CommentDiv>
-          <h3>comments</h3>
+          <h4>comments</h4>
           <br />
           <form onSubmit={handleComment}>
             <CommentInput
@@ -116,7 +116,7 @@ const Detail = () => {
             />
             <SubmitBtn type="submit">submit</SubmitBtn>
           </form>
-          <br />
+          <br /><br />
           {comments.map((comment, i) => (
             <Comment key={i}>
               <CommentUser>
@@ -172,6 +172,10 @@ const SubmitBtn = styled.button`
   border-style: none;
   border-radius: 30px;
   color: #707070;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 const CommentDiv = styled.div`
   width: 90%;
@@ -183,6 +187,7 @@ const Comment = styled.div`
   padding: 10px;
   background-color: #c9e6ff;
   border-radius: 30px;
+  margin-bottom: 15px;
 `;
 const CommentUser = styled.div`
   display: flex;
