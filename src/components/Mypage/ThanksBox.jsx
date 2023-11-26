@@ -5,9 +5,12 @@ import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import styled from 'styled-components';
 
+import { useNavigate } from 'react-router';
+
 function ThanksBox({ thanks, rnd, setRnd }) {
   const { id, content, comments, createdAt, likes, mood, nickname, userId, views } = thanks;
   console.log(thanks);
+  const navigate = useNavigate();
 
   //수정버튼 눌렀는지 확인
   const [isEditing, setIsEditing] = useState(false);
@@ -128,7 +131,11 @@ function ThanksBox({ thanks, rnd, setRnd }) {
           </Div>
         </Container>
       ) : (
-        <Container>
+        <Container
+          onClick={() => {
+            navigate('/detail/' + id);
+          }}
+        >
           <CreatedDate>
             {date[0]}년{date[1]}월{date[2]}일의 감사일기
           </CreatedDate>
