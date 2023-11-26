@@ -29,9 +29,11 @@ const userInfo = (state = initialState, action) => {
       console.log(action.payload);
       const tmp1 = JSON.parse(sessionStorage.getItem('userInfo'));
       sessionStorage.setItem('userInfo', JSON.stringify({ ...tmp1, profileImg: action.payload }));
+      return { ...tmp1, profileImg: action.payload };
     case EDIT_NAME:
       const tmp2 = JSON.parse(sessionStorage.getItem('userInfo'));
       sessionStorage.setItem('userInfo', JSON.stringify({ ...tmp2, nickname: action.payload }));
+      return { ...tmp2, nickname: action.payload };
 
     default:
       return state;
