@@ -352,10 +352,15 @@ const ThanksQuote = styled.h4`
   font-family: 'Intrepid';
   color: #659bcf;
   font-weight: bold;
-  text-shadow: 2px 2px 6px #c9e6ff; 
+  text-shadow: 2px 2px 4px #c9e6ff; 
 `
 const Select = styled.select`
-  transform: translateX(-32vw) translateY(16vh);
+  transform: translateX(-33vw) translateY(18vh);
+  padding: 5px;
+  border-style: none;
+  background-color: #659bcf;
+  color: white;
+  border-radius: 15px;
 `;
 const ThanksList = styled.div`
   margin: 20vh auto 0 auto;
