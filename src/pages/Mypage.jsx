@@ -9,8 +9,11 @@ import styled from 'styled-components';
 import usersData from '../usersData.json';
 import ThanksBox from '../components/Mypage/ThanksBox';
 import Header from '../components/Home/Header';
+import { useSelector } from 'react-redux';
+import { getAuth } from '@firebase/auth';
 
 function Mypage() {
+  const auth = getAuth();
   const { id } = useParams(); // path parameter 가져오기 : userId
   const [thankList, setThanks] = useState([]); //firebase에서 읽어온 정보 state
   const [rnd, setRnd] = useState('true'); //화면 랜더링 state
@@ -35,7 +38,8 @@ function Mypage() {
 
   // const myThanks = thankList.filter((thanks) => thanks.userID === id); //id에 해당하는 감사일기
   //merge 시 auto api 으로 수정
-  const myData = usersData.filter((user) => user.userID === id)[0];
+  const myData = useSelector((state) => state.setUser);
+  console.log(myData);
 
   const navigate = useNavigate();
   return (
@@ -43,8 +47,8 @@ function Mypage() {
       <Header />
       <ThanksDiary>
         <ProfileBox>
-          {/* <ProfileImg src={myData.profileImg} alt="profile" />
-          <ProfileName>{myData.name}</ProfileName> */}
+          <ProfileImg src={myData.profileImg} alt="profile" />
+          <ProfileName>{myData.nickname}</ProfileName>
         </ProfileBox>
         {thankList.map((thank) => (
           <ThanksBox key={thank.id} thanks={thank} rnd={rnd} setRnd={setRnd} />
@@ -68,6 +72,7 @@ const ProfileBox = styled.div`
 const ProfileImg = styled.img`
   border-radius: 50%;
   margin-bottom: 20px;
+  width: 150px;
 `;
 
 const ProfileName = styled.p`
