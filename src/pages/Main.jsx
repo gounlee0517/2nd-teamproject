@@ -5,6 +5,7 @@ import { collection, addDoc, doc, updateDoc, query, orderBy, where } from 'fireb
 import { increment } from 'firebase/firestore';
 import { getDocs, deleteDoc } from 'firebase/firestore';
 import styled from 'styled-components';
+import { FaHeart } from "react-icons/fa"
 
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
@@ -220,13 +221,13 @@ const Main = () => {
         </InputSection>
 
         <ThanksSection>
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
             <option value="views">조회순</option>
             <option value="likes">좋아요순</option>
             <option value="comments">댓글순</option>
-          </select>
+          </Select>
 
           <ThanksList style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px' }}>
             {posts.map((post, index) => (
@@ -321,6 +322,9 @@ const ThanksSection = styled.div`
   border-radius: 130px 130px 0px 0px;
   padding-bottom: 10vh;
 `;
+const Select = styled.select`
+  transform: translateX(-32vw) translateY(16vh);
+`
 const ThanksList = styled.div`
   margin: 20vh auto 0 auto;
   width: 90%;

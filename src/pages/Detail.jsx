@@ -7,6 +7,8 @@ import { db, arrayUnion } from '../firebase';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { increment } from 'firebase/firestore';
 import Header from '../components/Home/Header';
+import { IoMdHome } from 'react-icons/io';
+import styled from 'styled-components';
 
 // Detail 컴포넌트를 정의합니다.
 const Detail = () => {
@@ -79,40 +81,85 @@ const Detail = () => {
   return (
     <div>
       <Header />
-      <button onClick={handleGoHome}>홈으로 가기</button>
-      <h2>{post.nickname}</h2>
-      <p>작성 시간: {post.createdAt}</p>
-      {post.content && (
-        <div>
-          <p>{post.content.oneThank}</p>
-          <p>{post.content.twoThank}</p>
-          <p>{post.content.threeThank}</p>
-          <p>{post.content.fourThank}</p>
-          <p>{post.content.fiveThank}</p>
-        </div>
-      )}
-      <p>기분: {post.mood}</p>
-      <p>조회수: {post.views}</p>
-      <p>좋아요 수: {post.likes}</p>
-      <h3>댓글</h3>
-      {comments.map((comment, i) => (
-        <div key={i}>
-          <p>{comment.text}</p>
-          <p>작성자: {comment.userId}</p>
-          <p>작성 시간: {comment.createdAt}</p>
-        </div>
-      ))}
-      <form onSubmit={handleComment}>
-        <input
-          type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="댓글을 입력하세요."
-        />
-        <button type="submit">댓글 달기</button>
-      </form>
+      <IoMdHome onClick={handleGoHome} style={{ fontSize: '40px', marginTop: '10vh' }} />
+      <ThanksDetailPage>
+        <UserDetail>
+          <h2>{post.nickname}</h2>
+          <p>작성 시간: {post.createdAt}</p>
+          <p>기분: {post.mood}</p>
+        </UserDetail>
+
+        {post.content && (
+          <ThanksList>
+            <p>1 {post.content.oneThank}</p>
+            <p>2 {post.content.twoThank}</p>
+            <p>3 {post.content.threeThank}</p>
+            <p>4 {post.content.fourThank}</p>
+            <p>5 {post.content.fiveThank}</p>
+          </ThanksList>
+        )}
+        <ViewnLike>
+          <p>{post.views} views</p>
+          &nbsp; &nbsp; &nbsp; &nbsp;
+          <p>{post.likes} likes</p>
+        </ViewnLike>
+
+        <CommentDiv>
+          <h3>comments</h3>
+          <br />
+          <form onSubmit={handleComment}>
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="댓글을 입력하세요."
+            />
+            <button type="submit">submit</button>
+          </form>
+          <br />
+          {comments.map((comment, i) => (
+            <div key={i}>
+              <p>작성자: {comment.userId}</p>
+              <p>작성 시간: {comment.createdAt}</p>
+              <p>{comment.text}</p>
+            </div>
+          ))}
+        </CommentDiv>
+      </ThanksDetailPage>
     </div>
   );
 };
+
+const ThanksDetailPage = styled.div`
+  width: 80%;
+  margin: 10vh auto;
+  padding: 50px;
+  border-radius: 180px 180px 0 0;
+  background-color: white;
+`;
+const ThanksList = styled.div`
+  padding: 50px;
+  line-height: 30px;
+`;
+const UserDetail = styled.div`
+  width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+  line-height: 20px;
+  border-bottom: 1px solid #d9d9d9;
+`;
+const ViewnLike = styled.div`
+  padding-bottom: 50px;
+  display: flex;
+  color: #707070;
+  margin-left: 600px;
+  margin-bottom: -30px;
+`;
+const CommentDiv = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  padding: 50px;
+  border-top: 1px solid #659bcf;
+`;
 
 export default Detail;
