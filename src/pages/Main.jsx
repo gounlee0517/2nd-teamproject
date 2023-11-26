@@ -43,6 +43,7 @@ const Main = () => {
   });
 
   const [filter, setFilter] = useState('latest');
+  const [pagernd, setPagernd] = useState(false);
 
   // 페이지 이동을 위한 hook을 초기화합니다.
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const Main = () => {
     };
 
     fetchPosts();
-  }, [filter]);
+  }, [filter, pagernd]);
 
   // input의 변경 사항을 처리하는 함수입니다.
   const handleInput = (event) => {
@@ -88,15 +89,17 @@ const Main = () => {
         alert('감사한 사항을 5가지 모두 입력해주세요.');
         return;
       }
+      if (getAuth().currentUser.displayName === null) {
+        alert('My page에서 이름을 설정한 후 이용해 주세요.');
+        return;
+      }
     } else {
       alert('로그인 후 이용해주세요.');
       return;
     }
 
     // 새 게시글 객체를 만듭니다.
-
     const auth = getAuth().currentUser;
-
     const newPost = {
       userId: auth.uid,
       nickname: auth.displayName,
@@ -129,6 +132,7 @@ const Main = () => {
     // mood 상태도 초기화합니다.
     setMood('');
     setSelectedMood(null);
+    pagernd ? setPagernd(false) : setPagernd(true);
   };
 
   // 게시글을 클릭했을 때 조회수를 증가시키고 상세 페이지로 이동하는 함수입니다.
@@ -237,13 +241,13 @@ const Main = () => {
                   <ThanksListTime>{post.createdAt}</ThanksListTime>
                   <ThanksListUser>
                     <p>{post.nickname}</p> &nbsp;
-                     <br />
+                    <br />
                     <p>{post.mood}</p>
                   </ThanksListUser>
                   <FiveThanksList>
                     {post.content &&
                       ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
-                        <p key={i}>{post.content[key]}</p>
+                        <Thank key={i}>{post.content[key]}</Thank>
                       ))}
                   </FiveThanksList>
                 </div>
@@ -349,7 +353,7 @@ const ThanksListTime = styled.p`
   font-size: 11px;
   color: #707070;
   text-align: right;
-`
+`;
 const ThanksListUser = styled.div`
   width: 80%;
   margin: 0 auto;
@@ -362,7 +366,17 @@ const FiveThanksList = styled.div`
   text-align: left;
   padding: 20px;
   line-height: 18px;
-`
+`;
+
+const Thank = styled.p`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+
+  margin-bottom: 10px;
+`;
+
 const LikeBtn = styled.button`
   padding: 2px 15px;
   border-style: none;

@@ -26,6 +26,7 @@ function Header() {
   // console.log('header: ', auth.currentUser.displayName);
   console.log(auth.currentUser);
   console.log(sessionStorage.length);
+
   return (
     <>
       <STheader>
