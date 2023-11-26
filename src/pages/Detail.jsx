@@ -105,7 +105,7 @@ const Detail = () => {
         </ViewnLike>
 
         <CommentDiv>
-          <h3>comments</h3>
+          <h4>comments</h4>
           <br />
           <form onSubmit={handleComment}>
             <CommentInput
