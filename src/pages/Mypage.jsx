@@ -48,7 +48,7 @@ function Mypage() {
       <ThanksDiary>
         <ProfileBox>
           <ProfileImg src={myData.profileImg} alt="profile" />
-          <ProfileName>{myData.nickname}</ProfileName>
+          <ProfileName onClick={() => navigate('/setprofile/' + id)}>{myData.nickname}</ProfileName>
         </ProfileBox>
         {thankList.map((thank) => (
           <ThanksBox key={thank.id} thanks={thank} rnd={rnd} setRnd={setRnd} />
@@ -74,6 +74,7 @@ const ProfileImg = styled.img`
   margin-bottom: 20px;
 
   width: 150px;
+  height: 150px;
 `;
 
 const ProfileName = styled.p`

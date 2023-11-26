@@ -131,37 +131,38 @@ function ThanksBox({ thanks, rnd, setRnd }) {
           </Div>
         </Container>
       ) : (
-        <Container
-          onClick={() => {
-            navigate('/detail/' + id);
-          }}
-        >
-          <CreatedDate>
-            {date[0]}년{date[1]}월{date[2]}일의 감사일기
-          </CreatedDate>
-          <ThanksList>
-            <Thank>
-              <ThankOrder>감사 1</ThankOrder>
-              <ThankContent>{tnk1}</ThankContent>
-            </Thank>
-            <Thank>
-              <ThankOrder>감사 2</ThankOrder>
-              <ThankContent>{tnk2}</ThankContent>
-            </Thank>
-            <Thank>
-              <ThankOrder>감사 3</ThankOrder>
-              <ThankContent>{tnk3}</ThankContent>
-            </Thank>
-            <Thank>
-              <ThankOrder>감사 4</ThankOrder>
-              <ThankContent>{tnk4}</ThankContent>
-            </Thank>
-            <Thank>
-              <ThankOrder>감사 5</ThankOrder>
-              <ThankContent>{tnk5}</ThankContent>
-            </Thank>
-          </ThanksList>
-
+        <Container>
+          <div
+            onClick={() => {
+              navigate('/detail/' + id);
+            }}
+          >
+            <CreatedDate>
+              {date[0]}년{date[1]}월{date[2]}일의 감사일기
+            </CreatedDate>
+            <ThanksList>
+              <Thank>
+                <ThankOrder>감사 1</ThankOrder>
+                <ThankContent>{tnk1}</ThankContent>
+              </Thank>
+              <Thank>
+                <ThankOrder>감사 2</ThankOrder>
+                <ThankContent>{tnk2}</ThankContent>
+              </Thank>
+              <Thank>
+                <ThankOrder>감사 3</ThankOrder>
+                <ThankContent>{tnk3}</ThankContent>
+              </Thank>
+              <Thank>
+                <ThankOrder>감사 4</ThankOrder>
+                <ThankContent>{tnk4}</ThankContent>
+              </Thank>
+              <Thank>
+                <ThankOrder>감사 5</ThankOrder>
+                <ThankContent>{tnk5}</ThankContent>
+              </Thank>
+            </ThanksList>
+          </div>
           <Div>
             <Like>{views} views</Like>
             <Like>{likes} likes</Like>
