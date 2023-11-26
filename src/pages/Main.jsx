@@ -43,6 +43,7 @@ const Main = () => {
   });
 
   const [filter, setFilter] = useState('latest');
+  const [pagernd, setPagernd] = useState(false);
 
   // 페이지 이동을 위한 hook을 초기화합니다.
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const Main = () => {
     };
 
     fetchPosts();
-  }, [filter]);
+  }, [filter, pagernd]);
 
   // input의 변경 사항을 처리하는 함수입니다.
   const handleInput = (event) => {
@@ -131,6 +132,7 @@ const Main = () => {
     // mood 상태도 초기화합니다.
     setMood('');
     setSelectedMood(null);
+    pagernd ? setPagernd(false) : setPagernd(true);
   };
 
   // 게시글을 클릭했을 때 조회수를 증가시키고 상세 페이지로 이동하는 함수입니다.
@@ -245,7 +247,7 @@ const Main = () => {
                   <FiveThanksList>
                     {post.content &&
                       ['oneThank', 'twoThank', 'threeThank', 'fourThank', 'fiveThank'].map((key, i) => (
-                        <p key={i}>{post.content[key]}</p>
+                        <Thank key={i}>{post.content[key]}</Thank>
                       ))}
                   </FiveThanksList>
                 </div>
@@ -357,6 +359,16 @@ const FiveThanksList = styled.div`
   padding: 20px;
   line-height: 18px;
 `;
+
+const Thank = styled.p`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+
+  margin-bottom: 10px;
+`;
+
 const LikeBtn = styled.button`
   padding: 2px 15px;
   border-style: none;

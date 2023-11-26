@@ -255,6 +255,11 @@ const ThankOrder = styled.p`
 `;
 
 const ThankContent = styled.p`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+
   background-color: #c9e6ff;
   height: 25px;
   width: 480px;
