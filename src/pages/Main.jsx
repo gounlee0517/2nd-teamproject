@@ -20,7 +20,7 @@ const Main = () => {
     HAPPY: '🥰',
     GLOOMY: '😥',
     FINE: '🙂',
-    'NOT GOOD': '🤨'
+    'SOSO': '🤨'
   };
 
   const handleMood = (value) => {
@@ -181,8 +181,8 @@ const Main = () => {
                 &nbsp; &nbsp;
                 <P onClick={() => handleMood('FINE')}>{selectedMood === 'FINE' ? moodEmojis['FINE'] : 'FINE'}</P>
                 &nbsp; &nbsp;
-                <P onClick={() => handleMood('NOT GOOD')}>
-                  {selectedMood === 'NOT GOOD' ? moodEmojis['NOT GOOD'] : 'NOT GOOD'}
+                <P onClick={() => handleMood('SOSO')}>
+                  {selectedMood === 'SOSO' ? moodEmojis['SOSO'] : 'SOSO'}
                 </P>
               </MoodDiv>
             </MoodSection>
@@ -226,6 +226,8 @@ const Main = () => {
         </InputSection>
 
         <ThanksSection>
+          <ThanksQuote>"What makes the derest beautiful is<br />
+             that it hides a well somewhere."</ThanksQuote>
           <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
@@ -236,7 +238,7 @@ const Main = () => {
 
           <ThanksList style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
             {posts.map((post, index) => (
-              <div key={index} style={{ backgroundColor: '#c9e6ff', padding: '10px' }}>
+              <AThanksList key={index} style={{ backgroundColor: '#c9e6ff', padding: '10px' }}>
                 <div onClick={() => handleView(post.id)}>
                   <ThanksListTime>{post.createdAt}</ThanksListTime>
                   <ThanksListUser>
@@ -256,7 +258,7 @@ const Main = () => {
                   <p>{post.likes} likes</p>
                 </Viewnlike>
                 <LikeBtn onClick={(event) => handleLike(event, post.id, index)}>♥</LikeBtn>
-              </div>
+              </AThanksList>
             ))}
           </ThanksList>
         </ThanksSection>
@@ -284,7 +286,8 @@ const MoodSection = styled.div`
   }
 `;
 const TitleSection = styled.div`
-  margin-left: 70px;
+  margin-left: 15vw;
+  margin-top: -2vh;
 `
 const H1 = styled.h1`
   font-size: 60px;
@@ -309,7 +312,7 @@ const Input = styled.input`
   text-align: center;
 `;
 const MoodDiv = styled.div`
-  margin: 5vh auto 10px auto;
+  margin: 5vh auto 0 auto;
   display: flex;
   cursor: pointer;
 `;
@@ -335,6 +338,7 @@ const Button = styled.button`
   &:hover {
     background-color: white;
     color: #072541;
+    cursor: pointer;
   }
 `;
 const ThanksSection = styled.div`
@@ -342,13 +346,32 @@ const ThanksSection = styled.div`
   border-radius: 130px 130px 0px 0px;
   padding-bottom: 10vh;
 `;
+const ThanksQuote = styled.h4`
+  transform: translateY(10vh);
+  font-size: 30px;
+  font-family: 'Intrepid';
+  color: #659bcf;
+  font-weight: bold;
+  text-shadow: 2px 2px 6px #c9e6ff; 
+`
 const Select = styled.select`
   transform: translateX(-32vw) translateY(16vh);
 `;
 const ThanksList = styled.div`
   margin: 20vh auto 0 auto;
   width: 90%;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
+const AThanksList = styled.div`
+transition: all 0.3s;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 1px 1px 20px #ddd;
+  }
+`
 const ThanksListTime = styled.p`
   font-size: 11px;
   color: #707070;
