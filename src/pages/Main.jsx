@@ -231,9 +231,9 @@ const Main = () => {
 
           <ThanksList style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px' }}>
             {posts.map((post, index) => (
-              <div key={index} style={{ border: '1px solid #659bcf', padding: '10px' }}>
+              <div key={index} style={{ backgroundColor: '#c9e6ff', padding: '10px' }}>
                 <div onClick={() => handleView(post.id)}>
-                  <p>닉네임: {post.nickname}</p> &nbsp;
+                  <p>{post.nickname}</p> &nbsp;
                   <p>{post.createdAt}</p> <br />
                   <p>기분: {post.mood}</p>
                   {post.content &&
