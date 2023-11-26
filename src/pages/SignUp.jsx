@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -11,8 +11,7 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const confirmPassword = useRef(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -36,6 +35,19 @@ function SignUp() {
   };
 
   const signUp = (event) => {
+    const passwordConfirmCurrent = confirmPassword.current.value;
+    console.log('password', password);
+    console.log('password current', passwordConfirmCurrent);
+
+    setPasswordConfirm(passwordConfirmCurrent);
+
+    if (passwordConfirmCurrent !== password) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    } else {
+      alert('올바른 비밀번호입니다.');
+    }
+
     event.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -49,24 +61,12 @@ function SignUp() {
       });
   };
 
-  const onChangePasswordConfirm = (e) => {
-    const passwordConfirmCurrent = e.target.value;
-    setPasswordConfirm(passwordConfirmCurrent);
-
-    if (password === passwordConfirmCurrent) {
-      setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 :)');
-      setIsPasswordConfirm(true);
-    } else {
-      setPasswordConfirmMessage('비밀번호가 달라요. 다시 입력해주세요 !');
-      setIsPasswordConfirm(false);
-    }
-  };
   return (
     <>
       <Header />
       <STSignupTxt>signup</STSignupTxt>
       <STinputbox>
-        <Img src='img/night.jpg' />
+        <Img src="img/night.jpg" />
         <SignupInputSection>
           <SignupInput
             type="email"
@@ -87,15 +87,22 @@ function SignUp() {
           ></SignupInput>
           <br />
           <SignupInput
+            ref={confirmPassword}
             type="password"
             value={passwordConfirm}
-            name="passwordConfirm"
             onChange={onChange}
+            name="passwordConfirm"
             placeholder="password confirm"
             required
           ></SignupInput>
           <br />
-          <SignupBtn onClick={signUp}>sign up!</SignupBtn>
+          <SignupBtn
+            onClick={(event) => {
+              signUp(event);
+            }}
+          >
+            sign up!
+          </SignupBtn>
         </SignupInputSection>
       </STinputbox>
 

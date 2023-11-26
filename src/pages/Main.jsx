@@ -67,7 +67,7 @@ const Main = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [filter]);
 
   // input의 변경 사항을 처리하는 함수입니다.
   const handleInput = (event) => {
@@ -160,11 +160,11 @@ const Main = () => {
       <Header />
       <Mainpage>
         <InputSection>
-          <div>
+          <TitleSection>
             <H1>THANKS DIARY</H1>
             <br />
             <H4>what are you grateful for today?</H4>
-          </div>
+          </TitleSection>
 
           <InputDiv>
             <MoodSection>
@@ -279,6 +279,9 @@ const MoodSection = styled.div`
     margin-top: 20px;
   }
 `;
+const TitleSection = styled.div`
+  margin-left: 70px;
+`
 const H1 = styled.h1`
   font-size: 60px;
   display: flex;

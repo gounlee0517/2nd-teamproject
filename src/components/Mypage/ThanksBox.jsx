@@ -185,8 +185,7 @@ const Container = styled.div`
   /* align-items: center; */
 
   width: 600px;
-  height: 400px;
-  margin: 20px auto;
+  margin: 20px auto 20px auto;
   padding: 20px;
 
   border: none;
@@ -225,6 +224,7 @@ const Button = styled.button`
   width: 80px;
   padding: 8px;
   margin-left: 10px;
+  margin-bottom: 10px;
 
   border: none;
   border-radius: 7px;
@@ -257,14 +257,13 @@ const ThankOrder = styled.p`
 
 const ThankContent = styled.p`
   background-color: #c9e6ff;
-  height: 25px;
   width: 480px;
   margin: 5px 10px;
+  line-height: 18px;
 
   border: none;
   border-radius: 5px;
-  padding-left: 10px;
-  padding-top: 2px;
+  padding: 10px ;
 `;
 
 const Div = styled.div`
