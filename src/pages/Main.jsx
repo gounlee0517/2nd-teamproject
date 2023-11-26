@@ -18,7 +18,7 @@ const Main = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const moodEmojis = {
     HAPPY: '🥰',
-    GLOOMY: '🥲',
+    GLOOMY: '😥',
     FINE: '🙂',
     'NOT GOOD': '🤨'
   };
@@ -302,13 +302,18 @@ const Input = styled.input`
   text-align: center;
 `;
 const MoodDiv = styled.div`
-  margin: 5vh auto 10px 2vw;
+  margin: 5vh auto 10px auto;
   display: flex;
   cursor: pointer;
 `;
 const P = styled.p`
+  width: 80px;
   font-size: 18px;
   font-family: 'Ageo Personal Use';
+  transition: all 0.5s;
+  &:hover {
+    text-shadow: 2px 2px 2px white;
+  }
 `;
 const Button = styled.button`
   width: 150px;
