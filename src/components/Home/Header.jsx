@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getAuth, onAuthStateChanged, setPersistence } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIslogined } from '../../redux/modules/isLogined';
 import { setUser } from '../../redux/modules/userInfo';
@@ -40,7 +40,6 @@ function Header() {
         <STul>
           {isLogin.isLogined ? (
             <>
-              {/* <STli>{auth.currentUser.displayName || '닉네임을 설정하세요'}</STli> */}
               <STli
                 onClick={() => {
                   onLogOutClick();

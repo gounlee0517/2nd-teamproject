@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, addDoc, doc, updateDoc, query, orderBy, where } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, query, orderBy } from 'firebase/firestore';
 import { increment } from 'firebase/firestore';
-import { getDocs, deleteDoc } from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import styled from 'styled-components';
-import { FaHeart } from 'react-icons/fa';
 
 import Header from '../components/Home/Header';
 import Footer from '../components/Home/Footer';
@@ -20,7 +19,7 @@ const Main = () => {
     HAPPY: '🥰',
     GLOOMY: '😥',
     FINE: '🙂',
-    'SOSO': '🤨'
+    SOSO: '🤨'
   };
 
   const handleMood = (value) => {
@@ -133,6 +132,7 @@ const Main = () => {
     setMood('');
     setSelectedMood(null);
     pagernd ? setPagernd(false) : setPagernd(true);
+    // console.log(pagernd);
   };
 
   // 게시글을 클릭했을 때 조회수를 증가시키고 상세 페이지로 이동하는 함수입니다.
@@ -181,9 +181,7 @@ const Main = () => {
                 &nbsp; &nbsp;
                 <P onClick={() => handleMood('FINE')}>{selectedMood === 'FINE' ? moodEmojis['FINE'] : 'FINE'}</P>
                 &nbsp; &nbsp;
-                <P onClick={() => handleMood('SOSO')}>
-                  {selectedMood === 'SOSO' ? moodEmojis['SOSO'] : 'SOSO'}
-                </P>
+                <P onClick={() => handleMood('SOSO')}>{selectedMood === 'SOSO' ? moodEmojis['SOSO'] : 'SOSO'}</P>
               </MoodDiv>
             </MoodSection>
             <Input
@@ -226,8 +224,11 @@ const Main = () => {
         </InputSection>
 
         <ThanksSection>
-          <ThanksQuote>"What makes the derest beautiful is<br />
-             that it hides a well somewhere."</ThanksQuote>
+          <ThanksQuote>
+            "What makes the derest beautiful is
+            <br />
+            that it hides a well somewhere."
+          </ThanksQuote>
           <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
             <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
@@ -288,7 +289,7 @@ const MoodSection = styled.div`
 const TitleSection = styled.div`
   margin-left: 15vw;
   margin-top: -2vh;
-`
+`;
 const H1 = styled.h1`
   font-size: 60px;
   display: flex;
@@ -352,8 +353,8 @@ const ThanksQuote = styled.h4`
   font-family: 'Intrepid';
   color: #659bcf;
   font-weight: bold;
-  text-shadow: 2px 2px 4px #c9e6ff; 
-`
+  text-shadow: 2px 2px 4px #c9e6ff;
+`;
 const Select = styled.select`
   transform: translateX(-33vw) translateY(18vh);
   padding: 5px;
@@ -371,12 +372,12 @@ const ThanksList = styled.div`
   }
 `;
 const AThanksList = styled.div`
-transition: all 0.3s;
+  transition: all 0.3s;
   &:hover {
     transform: scale(1.1);
     box-shadow: 1px 1px 20px #ddd;
   }
-`
+`;
 const ThanksListTime = styled.p`
   font-size: 11px;
   color: #707070;

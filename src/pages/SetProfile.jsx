@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
+import React, { useRef, useState } from 'react';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getAuth, updateProfile } from '@firebase/auth';
 import { editIMG, editName } from '../redux/modules/userInfo';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function SetProfile({ isOpen, closeModal, myData, setMyData }) {
   // console.log(myData);
