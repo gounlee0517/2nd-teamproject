@@ -9,9 +9,11 @@ import { increment } from 'firebase/firestore';
 import Header from '../components/Home/Header';
 import { IoMdHome } from 'react-icons/io';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 // Detail 컴포넌트를 정의합니다.
 const Detail = () => {
+  const userMail = useSelector((state) => state.setUser);
   // state를 정의합니다. post는 게시글을, comment는 댓글을, comments는 댓글 목록을 저장합니다.
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState('');
@@ -77,6 +79,8 @@ const Detail = () => {
       });
   };
 
+  console.log('check: ', userMail);
+
   // 렌더링합니다. 여기서는 게시글 내용, 좋아요 버튼, 댓글 기능 등을 표시합니다.
   return (
     <div>
@@ -116,11 +120,12 @@ const Detail = () => {
             />
             <SubmitBtn type="submit">submit</SubmitBtn>
           </form>
-          <br /><br />
+          <br />
+          <br />
           {comments.map((comment, i) => (
             <Comment key={i}>
               <CommentUser>
-                <p>{comment.userId}</p>
+                <p>{userMail.email}</p>
                 <p>{comment.createdAt}</p>
               </CommentUser>
               <CommentTxt>{comment.text}</CommentTxt>
