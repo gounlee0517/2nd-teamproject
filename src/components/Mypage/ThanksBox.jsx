@@ -40,16 +40,14 @@ function ThanksBox({ thanks, rnd, setRnd }) {
   //수정완료 핸들러
   const updateThanks = async (event) => {
     const thanksRef = doc(db, 'posts', id);
-    await updateDoc(thanksRef, {
-      ...thanks,
-      content: [
-        thanks1.current.value,
-        thanks2.current.value,
-        thanks3.current.value,
-        thanks4.current.value,
-        thanks5.current.value
-      ]
+    await updateDoc(thanksRef, 'content', {
+      oneThank: thanks1.current.value,
+      twoThank: thanks2.current.value,
+      threeThank: thanks3.current.value,
+      fourThank: thanks4.current.value,
+      fiveThank: thanks5.current.value
     });
+    rnd ? setRnd(false) : setRnd(true);
   };
 
   let date = createdAt.split('.');
@@ -262,7 +260,7 @@ const ThankContent = styled.p`
 
   border: none;
   border-radius: 5px;
-  padding: 10px ;
+  padding: 10px;
 `;
 
 const Div = styled.div`

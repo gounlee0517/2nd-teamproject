@@ -132,7 +132,7 @@ const Main = () => {
     setMood('');
     setSelectedMood(null);
     pagernd ? setPagernd(false) : setPagernd(true);
-    // console.log(pagernd);
+    console.log(pagernd);
   };
 
   // 게시글을 클릭했을 때 조회수를 증가시키고 상세 페이지로 이동하는 함수입니다.
