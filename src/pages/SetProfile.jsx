@@ -2,9 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 import { getAuth, updateProfile } from '@firebase/auth';
 import { editIMG, editName } from '../redux/modules/userInfo';
-import { useDispatch, useSelector } from 'react-redux';
-import Header from '../components/Home/Header';
-import { useNavigate } from 'react-router';
+import { useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import { IoIosCloseCircle } from 'react-icons/io';
 
