@@ -4,12 +4,12 @@ import { getAnalytics } from 'firebase/analytics';
 import { getFirestore, arrayUnion as _arrayUnion } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBCh9tXmI2ILr95XLpLkRPNt7FXOCvPB2c',
-  authDomain: 'thanksdiary8.firebaseapp.com',
-  projectId: 'thanksdiary8',
-  storageBucket: 'thanksdiary8.appspot.com',
-  messagingSenderId: '722091162582',
-  appId: '1:722091162582:web:4553db6ba3e1a78c3bc277'
+  apiKey: process.env.REACT_APP_FB_API_KEY,
+  authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FB_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FB_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FB_APP_ID
 };
 
 // Initialize Firebase

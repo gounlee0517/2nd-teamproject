@@ -12,10 +12,8 @@ function SetProfile({ isOpen, closeModal, myData, setMyData }) {
   // console.log(myData);
   const dispatch = useDispatch();
   const storage = getStorage();
-  const imageListRef = ref(storage);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrl, setUrlList] = useState('');
-  const [name, setName] = useState('');
 
   const upload = () => {
     if (imageUpload === null) return;
