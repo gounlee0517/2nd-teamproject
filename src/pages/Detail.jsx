@@ -64,7 +64,7 @@ const Detail = () => {
     const docRef = doc(db, 'posts', id);
     const newComment = {
       text: comment,
-      userId: 'user123',
+      userId: userMail,
       createdAt: new Date().toLocaleString()
     };
     updateDoc(docRef, {
@@ -123,7 +123,7 @@ const Detail = () => {
           {comments.map((comment, i) => (
             <Comment key={i}>
               <CommentUser>
-                <p>{userMail.email}</p>
+                <p>{comment.userId}</p>
                 <p>{comment.createdAt}</p>
               </CommentUser>
               <CommentTxt>{comment.text}</CommentTxt>
