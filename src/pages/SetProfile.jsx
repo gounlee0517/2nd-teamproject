@@ -3,17 +3,13 @@ import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from 'firebase/
 import { getAuth, updateProfile } from '@firebase/auth';
 import { editIMG, editName } from '../redux/modules/userInfo';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from '../components/Home/Header';
-import { useNavigate } from 'react-router';
 
 function SetProfile({ isOpen, closeModal, myData, setMyData }) {
   // console.log(myData);
   const dispatch = useDispatch();
   const storage = getStorage();
-  const imageListRef = ref(storage);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrl, setUrlList] = useState('');
-  const [name, setName] = useState('');
 
   const upload = () => {
     if (imageUpload === null) return;
