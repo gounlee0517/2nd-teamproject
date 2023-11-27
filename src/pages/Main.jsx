@@ -225,7 +225,7 @@ const Main = () => {
 
         <ThanksSection>
           <ThanksQuote>
-            "What makes the derest beautiful is
+            "What makes the desert beautiful is
             <br />
             that it hides a well somewhere."
           </ThanksQuote>
