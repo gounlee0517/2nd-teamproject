@@ -51,8 +51,9 @@ function Mypage() {
       <ThanksDiary>
         <ProfileBox>
           <ProfileImg src={myData.profileImg} alt="profile" />
-          <ProfileName onClick={openModal}>{myData.nickname}</ProfileName>
+          <ProfileName>{myData.nickname}</ProfileName>
           <SetProfile isOpen={isModalOpen} closeModal={closeModal} myData={myData} setMyData={setMyData} />
+          <ProfileEdit onClick={openModal} isOpen={isModalOpen}>프로필 변경하기</ProfileEdit>
         </ProfileBox>
         {thankList.map((thank) => (
           <ThanksBox key={thank.id} thanks={thank} rnd={rnd} setRnd={setRnd} />
@@ -72,19 +73,21 @@ const ProfileBox = styled.div`
   align-items: center;
   padding: 50px;
 `;
-
 const ProfileImg = styled.img`
   border-radius: 50%;
   margin-bottom: 20px;
   width: 150px;
   height: 150px;
 `;
-
 const ProfileName = styled.p`
   font-size: 32px;
   font-weight: bold;
 `;
-
+const ProfileEdit = styled.p`
+  display: ${(props) => (props.isOpen ? 'none' : 'block')};
+  margin-top: 20px;
+  color: #bad7f1;
+`
 const ThanksDiary = styled.main`
   margin-bottom: 150px;
 `;
