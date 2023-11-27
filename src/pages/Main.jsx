@@ -287,7 +287,7 @@ const MoodSection = styled.div`
   }
 `;
 const TitleSection = styled.div`
-  margin-left: 15vw;
+  margin-left: 12vw;
   margin-top: -2vh;
 `;
 const H1 = styled.h1`
