@@ -41,7 +41,7 @@ const Main = () => {
     fiveThank: ''
   });
 
-  const [filter, setFilter] = useState('latest');
+  const [filter, setFilter] = useState('oldest');
   const [pagernd, setPagernd] = useState(false);
 
   // 페이지 이동을 위한 hook을 초기화합니다.
@@ -230,8 +230,8 @@ const Main = () => {
             that it hides a well somewhere."
           </ThanksQuote>
           <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="latest">최신순</option>
             <option value="oldest">오래된순</option>
+            <option value="latest">최신순</option>
             <option value="views">조회순</option>
             <option value="likes">좋아요순</option>
             <option value="comments">댓글순</option>
