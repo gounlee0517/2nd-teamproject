@@ -79,8 +79,6 @@ const Detail = () => {
       });
   };
 
-  console.log('check: ', userMail);
-
   // 렌더링합니다. 여기서는 게시글 내용, 좋아요 버튼, 댓글 기능 등을 표시합니다.
   return (
     <div>
