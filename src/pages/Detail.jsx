@@ -64,7 +64,7 @@ const Detail = () => {
     const docRef = doc(db, 'posts', id);
     const newComment = {
       text: comment,
-      userId: userMail,
+      userId: userMail.email,
       createdAt: new Date().toLocaleString()
     };
     updateDoc(docRef, {
